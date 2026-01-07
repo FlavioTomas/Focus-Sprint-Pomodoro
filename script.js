@@ -26,16 +26,72 @@ function changeBackgroundColor(newColor) {
 }
 
 focusButton.addEventListener('click', () => {
-    changeBackgroundColor("#1E2A3A")
+    if (body.classList.contains('dark-mode')) {
+        changeBackgroundColor("#1E2A3A")
+        rootElement.style.setProperty('--color-accent', '#00C896');
+        rootElement.style.setProperty('--color-accent-hover', '#68dbbe');
+        rootElement.style.setProperty('--color-surface', '#162033');
+    } else {
+        changeBackgroundColor("#e7ffebff");
+        rootElement.style.setProperty('--color-accent', '#1E2A3A');
+        rootElement.style.setProperty('--color-accent-hover', '#374e6bff');
+        rootElement.style.setProperty('--color-surface', '#afaeaeff');
+    }
     timerDisplay.innerHTML = '25:00'
 })
 breakButton.addEventListener('click', () => {
-    changeBackgroundColor("#1c5341ff")
+    if (body.classList.contains('dark-mode')) {
+        changeBackgroundColor("#0f2e24ff")
+        rootElement.style.setProperty('--color-accent', '#52d864ff');
+        rootElement.style.setProperty('--color-accent-hover', '#61ff76ff');
+        rootElement.style.setProperty('--color-surface', '#062018ff');
+    } else {
+        changeBackgroundColor("#4fe9b5ff")
+        rootElement.style.setProperty('--color-accent', '#002712ff');
+        rootElement.style.setProperty('--color-accent-hover', '#004721ff');
+        rootElement.style.setProperty('--color-surface', '#3ea381ff');
+    }
     timerDisplay.innerHTML = '5:00'
 })
 longBreakButton.addEventListener('click', () => {
-    changeBackgroundColor("#461935")
+    if (body.classList.contains('dark-mode')) {
+        changeBackgroundColor("#461935")
+        rootElement.style.setProperty('--color-accent', '#b82f83ff');
+        rootElement.style.setProperty('--color-accent-hover', '#f53fafff');
+        rootElement.style.setProperty('--color-surface', '#2c0c20ff');
+    } else {
+        changeBackgroundColor("#d776e4ff")
+        rootElement.style.setProperty('--color-accent', '#240129ff');
+        rootElement.style.setProperty('--color-accent-hover', '#480052ff');
+        rootElement.style.setProperty('--color-surface', '#a053aaff');
+    }
     timerDisplay.innerHTML = '15:00'
 })
+
+
+darkModeToggle.addEventListener('click', () => {
+    if (body.classList.contains('dark-mode')) {
+        changeBackgroundColor("#e7ffebff");
+        rootElement.style.setProperty('--color-text-primary', '#1f1f1fff');
+        rootElement.style.setProperty('--color-accent', '#1E2A3A');
+        rootElement.style.setProperty('--color-accent-hover', '#374e6bff');
+        rootElement.style.setProperty('--color-surface', '#afaeaeff');
+        rootElement.style.setProperty('--color-muted', '#000000ff');
+        body.classList.remove('dark-mode')
+    } else {
+        changeBackgroundColor("#1E2A3A")
+        rootElement.style.setProperty('--color-text-primary', '#F0F0F0');
+        rootElement.style.setProperty('--color-accent', '#00C896');
+        rootElement.style.setProperty('--color-accent-hover', '#68dbbe');
+        rootElement.style.setProperty('--color-surface', '#162033');
+        rootElement.style.setProperty('--color-muted', '#A0AEC0');
+        body.classList.add('dark-mode')
+    }
+    timerModesButtons.forEach(btn => { btn.classList.remove('active') })
+    focusButton.classList.add('active')
+    timerDisplay.innerHTML = '25:00'
+})
+
+
 
 
