@@ -6,6 +6,9 @@ const timerModesButtons = document.querySelectorAll('.button--time-mode')
 const body = document.querySelector('.body')
 const timerDisplay = document.querySelector('.js-timer-display')
 const darkModeToggle = document.querySelector('.js-dark-mode-toggle')
+const playPauseButton = document.querySelector('.js-play-pause-button');
+const resetButton = document.querySelector('.js-reset-button');
+const skipButton = document.querySelector('.js-skip-button')
 // Getting CSS styles
 const rootElement = document.documentElement;
 const styles = getComputedStyle(rootElement);
@@ -24,7 +27,6 @@ timerModesButtons.forEach(button => {
 function changeBackgroundColor(newColor) {
     rootElement.style.setProperty('--color-background', newColor);
 }
-
 focusButton.addEventListener('click', () => {
     if (body.classList.contains('dark-mode')) {
         changeBackgroundColor("#1E2A3A")
@@ -68,7 +70,7 @@ longBreakButton.addEventListener('click', () => {
     timerDisplay.innerHTML = '15:00'
 })
 
-
+// Changing between dark and light mode
 darkModeToggle.addEventListener('click', () => {
     if (body.classList.contains('dark-mode')) {
         changeBackgroundColor("#e7ffebff");
@@ -91,6 +93,26 @@ darkModeToggle.addEventListener('click', () => {
     focusButton.classList.add('active')
     timerDisplay.innerHTML = '25:00'
 })
+
+
+const focusTime = 25
+const breakTime = 5
+const longBreakTime = 15
+
+
+const startTimer = (time) => {
+    clearInterval(timerInterval);   
+    let totalSeconds = time * 60;
+    timerInterval = setInterval(() => {
+        totalSeconds--;
+
+        updateTimerDisplay(totalSeconds)
+    }, 1000);
+}
+
+
+
+playPauseButton.addEventListener('click', () => startTimer(focusTime))
 
 
 
