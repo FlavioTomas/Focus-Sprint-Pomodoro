@@ -194,10 +194,8 @@ const resetTimer = timer => {
 }
 
 
-
-
+// Giving a class to the button that is active in the moment 
 timerModesButtons.forEach(button => {
-    // changing the appearance of the timer mode buttons according to the mode
     button.addEventListener('click', () => {
         timerModesButtons.forEach(btn => { btn.classList.remove('active') })
         button.classList.add('active')
@@ -205,9 +203,9 @@ timerModesButtons.forEach(button => {
 });
 
 
+// Configuring the correct timer to which mode
 playPauseButton.addEventListener('click', () => {
     for (const button of timerModesButtons) {
-        // Configuring the correct timer to which mode
         if (button.classList.contains('active')) {
             if (button.dataset.mode === 'focus') {
                 focusTimer()
@@ -221,6 +219,8 @@ playPauseButton.addEventListener('click', () => {
     }
 })
 
+
+// Ensuring that the reset of one mode does not affect the others 
 resetButton.addEventListener('click', () => {
     if (focusButton.classList.contains('active')) {
         resetTimer(focusTime)
