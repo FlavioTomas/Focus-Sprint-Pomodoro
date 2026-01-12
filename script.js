@@ -15,13 +15,7 @@ const styles = getComputedStyle(rootElement);
 const colorSurface = styles.getPropertyValue('--color-surface')
 const colorBackground = styles.getPropertyValue('--color-background')
 
-// changing the appearance of the timer mode buttons according to the mode
-timerModesButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        timerModesButtons.forEach(btn => { btn.classList.remove('active') })
-        button.classList.add('active')
-    })
-});
+
 
 // Changing the background color and the timer display value according to the mode
 function changeBackgroundColor(newColor) {
@@ -39,7 +33,8 @@ focusButton.addEventListener('click', () => {
         rootElement.style.setProperty('--color-accent-hover', '#374e6bff');
         rootElement.style.setProperty('--color-surface', '#afaeaeff');
     }
-    timerDisplay.innerHTML = '25:00'
+    updateTimerDisplay(focusTime)
+    clearInterval(timerInterval)
 })
 breakButton.addEventListener('click', () => {
     if (body.classList.contains('dark-mode')) {
@@ -53,7 +48,8 @@ breakButton.addEventListener('click', () => {
         rootElement.style.setProperty('--color-accent-hover', '#004721ff');
         rootElement.style.setProperty('--color-surface', '#3ea381ff');
     }
-    timerDisplay.innerHTML = '5:00'
+    updateTimerDisplay(breakTime)
+    clearInterval(timerInterval)
 })
 longBreakButton.addEventListener('click', () => {
     if (body.classList.contains('dark-mode')) {
@@ -67,7 +63,8 @@ longBreakButton.addEventListener('click', () => {
         rootElement.style.setProperty('--color-accent-hover', '#480052ff');
         rootElement.style.setProperty('--color-surface', '#a053aaff');
     }
-    timerDisplay.innerHTML = '15:00'
+    updateTimerDisplay(longBreakTime)
+    clearInterval(timerInterval)
 })
 
 // Changing between dark and light mode
@@ -91,7 +88,7 @@ darkModeToggle.addEventListener('click', () => {
     }
     timerModesButtons.forEach(btn => { btn.classList.remove('active') })
     focusButton.classList.add('active')
-    timerDisplay.innerHTML = '25:00'
+    updateTimerDisplay(focusTime)
 })
 
 // timers amount and turning into seconds
@@ -120,6 +117,37 @@ function focusTimer() {
     }
 }
 
+function breakTimer() {
+    if (playPauseButton.classList.contains('playing')) {
+        clearInterval(timerInterval)
+        playPauseButton.classList.remove('playing')
+        updatePlayButton(true)
+    } else {
+        timerInterval = setInterval(() => {
+            breakTime--;
+
+            updateTimerDisplay(breakTime)
+        }, 1000);
+        playPauseButton.classList.add('playing')
+        updatePlayButton(false)
+    }
+}
+
+function longBreakTimer() {
+    if (playPauseButton.classList.contains('playing')) {
+        clearInterval(timerInterval)
+        playPauseButton.classList.remove('playing')
+        updatePlayButton(true)
+    } else {
+        timerInterval = setInterval(() => {
+            longBreakTime--;
+
+            updateTimerDisplay(longBreakTime)
+        }, 1000);
+        playPauseButton.classList.add('playing')
+        updatePlayButton(false)
+    }
+}
 
 // function that update the timer display (to be used in any mode)
 const updateTimerDisplay = time => {
@@ -143,7 +171,7 @@ const updatePlayButton = (condition) => {
 }
 
 
-
+// function that resets the timer, both the variable and the display timer
 const resetTimer = timer => {
     if (timer === focusTime) {
         focusTime = 25
@@ -165,8 +193,40 @@ const resetTimer = timer => {
     playPauseButton.classList.remove('playing')
 }
 
-playPauseButton.addEventListener('click', focusTimer)
-resetButton.addEventListener('click', () => resetTimer(focusTime))
 
 
 
+timerModesButtons.forEach(button => {
+    // changing the appearance of the timer mode buttons according to the mode
+    button.addEventListener('click', () => {
+        timerModesButtons.forEach(btn => { btn.classList.remove('active') })
+        button.classList.add('active')
+    })
+});
+
+
+playPauseButton.addEventListener('click', () => {
+    for (const button of timerModesButtons) {
+        // Configuring the correct timer to which mode
+        if (button.classList.contains('active')) {
+            if (button.dataset.mode === 'focus') {
+                focusTimer()
+            } else if (button.dataset.mode === 'break') {
+                breakTimer()
+            } else if (button.dataset.mode === 'longBreak') {
+                longBreakTimer()
+            }
+            break
+        }
+    }
+})
+
+resetButton.addEventListener('click', () => {
+    if (focusButton.classList.contains('active')) {
+        resetTimer(focusTime)
+    } else if (breakButton.classList.contains('active')) {
+        resetTimer(breakTime)
+    } else if (longBreakButton.classList.contains('active')) {
+        resetTimer(longBreakTime)
+    }
+})

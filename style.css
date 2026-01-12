@@ -129,15 +129,16 @@ main {
     font-weight:800;
     font-size: 1.25rem;
     padding: 20px 70px;
+    transition: 0.5s;
 }
 
 .button--paused {
     background-color: var(--color-accent-hover);
-    transform: translateY(-0.5vh);
+    transform: translateY(-0.7vh);
 }
 
 .button--primary:hover {
-    transform: translateY(-0.5vh);
+    transform: translateY(-0.7vh);
 }
 
 .button--secondary {
