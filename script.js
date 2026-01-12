@@ -107,6 +107,7 @@ function focusTimer() {
     if (playPauseButton.classList.contains('playing')) {
         clearInterval(timerInterval)
         playPauseButton.classList.remove('playing')
+        updatePlayButton(true)
     } else {
         timerInterval = setInterval(() => {
             focusTime--;
@@ -114,6 +115,7 @@ function focusTimer() {
             updateTimerDisplay(focusTime)
         }, 1000);
         playPauseButton.classList.add('playing')
+        updatePlayButton(false)
     }
 }
 
@@ -125,7 +127,15 @@ const updateTimerDisplay = time => {
     document.title = `${formattedTime} - Focus Sprint`;
 }
 
-
+const updatePlayButton = (condition) => {
+    if (condition){
+        playPauseButton.textContent = 'Play'
+        playPauseButton.classList.remove('button--paused')
+    }else {
+        playPauseButton.textContent = 'Pause'
+        playPauseButton.classList.add('button--paused')
+    }
+}
 
 playPauseButton.addEventListener('click', focusTimer)
 

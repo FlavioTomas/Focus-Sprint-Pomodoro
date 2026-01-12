@@ -24,6 +24,7 @@
 
 html,
 body {
+    height: 100%;
     transition: 0.5s ease-in-out;
 }
 
@@ -130,8 +131,12 @@ main {
     padding: 20px 70px;
 }
 
-.button--primary:hover {
+.button--paused {
     background-color: var(--color-accent-hover);
+}
+
+.button--primary:hover {
+    transform: translateY(-0.5vh);
 }
 
 .button--secondary {
