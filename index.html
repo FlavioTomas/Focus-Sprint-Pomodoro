@@ -22,114 +22,129 @@
 
 
 
-<body class="body dark-mode">
-
-    <!-- header block -->
-    <header class="header">
-        <span class="header__brand">Focus Sprint</span>
-        <div class="header__controls">
-            <button class="button button-icon js-dark-mode-toggle" aria-label="Toggle dark mode">
-                <span class="material-symbols-outlined">bedtime</span>
-            </button>
-            <button class="button button-icon js-settings-button" aria-label="Settings">
-                <span class="material-symbols-outlined">settings</span>
-            </button>
-        </div>
-    </header>
+<body class="body">
 
 
-    <!-- Main block with timer as tasks sections -->
-    <main>
-        <!-- Timer Section -->
-        <section class="timer">
-            <!-- Div for clock animation -->
-            <div class="timer__clock"></div>
-            <!-- Div for the timer modes -->
-            <div class="timer__modes">
-                <button class="button button--time-mode js-focus-button active" data-mode="focus">Focus Time</button>
-                <button class="button button--time-mode js-break-button" data-mode="break">Break</button>
-                <button class="button button--time-mode js-long-break-button" data-mode="longBreak">Long break</button>
+    <section class="main-container js-main-container dark-mode">
+
+
+        <!-- header block -->
+        <header class="header">
+            <span class="header__brand">Focus Sprint</span>
+            <div class="header__controls">
+                <button class="button button-icon js-dark-mode-toggle" aria-label="Toggle dark mode">
+                    <span class="material-symbols-outlined">bedtime</span>
+                </button>
+                <button class="button button-icon js-settings-button" aria-label="Settings">
+                    <span class="material-symbols-outlined">settings</span>
+                </button>
             </div>
-            <!-- Stopwatch -->
-            <p class="timer__display js-timer-display">25:00</p>
+        </header>
 
-            <!-- Wrapper for the timer control buttons -->
-            <div class="timer__controls">
-                <!-- Reset button -->
-                <button class="button button--secondary js-reset-button" aria-label="Reset timer">
-                    <span class="material-symbols-outlined">history</span>
+
+        <!-- Main block with timer as tasks sections -->
+        <main>
+            <!-- Timer Section -->
+            <section class="timer">
+                <!-- Div for clock animation -->
+                <div class="timer__clock"></div>
+                <!-- Div for the timer modes -->
+                <div class="timer__modes">
+                    <button class="button button--time-mode js-focus-button active" data-mode="focus">Focus
+                        Time</button>
+                    <button class="button button--time-mode js-break-button" data-mode="break">Break</button>
+                    <button class="button button--time-mode js-long-break-button" data-mode="longBreak">Long
+                        break</button>
+                </div>
+                <!-- Stopwatch -->
+                <p class="timer__display js-timer-display">25:00</p>
+
+                <!-- Wrapper for the timer control buttons -->
+                <div class="timer__controls">
+                    <!-- Reset button -->
+                    <button class="button button--secondary js-reset-button" aria-label="Reset timer">
+                        <span class="material-symbols-outlined">history</span>
+                    </button>
+                    <!-- Play/Stop button -->
+                    <button class="button button--primary js-play-pause-button">PLAY</button>
+                    <!-- Skip button -->
+                    <button class="button button--secondary js-skip-button" aria-label="Skip to next cycle">
+                        <span class="material-symbols-outlined">skip_next</span>
+                    </button>
+                </div>
+            </section>
+
+
+            <!-- Tasks section -->
+            <section class="tasks" aria-labelledby="tasks-heading">
+                <div class="tasks__header">
+                    <h2 class="tasks__title" id="tasks-heading">Tasks</h2>
+                    <button class="button button--tasks__options js-task-options-button" aria-label="More task options">
+                        <span class="material-symbols-outlined">more_vert</span>
+                    </button>
+                </div>
+                <!-- Button to add a task -->
+                <button class="button button--tasks__add js-add-task-button">
+                    <span class="material-symbols-outlined">
+                        add
+                    </span>
+                    Add Task
                 </button>
-                <!-- Play/Stop button -->
-                <button class="button button--primary js-play-pause-button">PLAY</button>
-                <!-- Skip button -->
-                <button class="button button--secondary js-skip-button" aria-label="Skip to next cycle">
-                    <span class="material-symbols-outlined">skip_next</span>
-                </button>
+                <div class="tasks__display">
+                    <!-- Will show the tasks here -->
+                </div>
+            </section>
+        </main>
+
+
+        <section class="settings js-settings" aria-labelledby="settings">
+            <h2>Settings</h2>
+            <div class="settings__options">
+                <p>Auto Start Breaks</p>
+                <label class="settings__options--auto-starts-switch">
+                    <input type="checkbox"
+                        class="settings__options--auto-starts-input js-settings__options--auto-starts-input" />
+                    <span class="settings__options--auto-starts-switch-slider"></span>
+                </label>
+            </div>
+            <div class="settings__options">
+                <p>Auto Start Focus</p>
+                <label class="settings__options--auto-starts-switch">
+                    <input type="checkbox"
+                        class="settings__options--auto-starts-input js-settings__options--auto-starts-input" />
+                    <span class="settings__options--auto-starts-switch-slider"></span>
+                </label>
+            </div>
+            <div class="settings__options">
+                <p>Long Break Every <span class="js-settings__options--long-break-interval--text">3</span> Breaks</p>
+                <input class="settings__numbers-input js-settings__options--long-break-interval" type="number"
+                    placeholder="3">
+            </div>
+            <div class="settings__options settings__timers">
+                <p>TIMERS</p>
+                <div class="settings__timers--inputs">
+                    <label class="settings__timers--labels">
+                        Focus
+                        <input class="settings__numbers-input js-settings__numbers-input--focus" type="number"
+                            placeholder="25">
+                    </label>
+                    <label class="settings__timers--labels">
+                        Break
+                        <input class="settings__numbers-input js-settings__numbers-input--break" type="number"
+                            placeholder="5">
+                    </label>
+                    <label class="settings__timers--labels">
+                        Long Break
+                        <input class="settings__numbers-input js-settings__numbers-input--long-break" type="number"
+                            placeholder="15">
+                    </label>
+                </div>
             </div>
         </section>
 
 
-        <!-- Tasks section -->
-        <section class="tasks" aria-labelledby="tasks-heading">
-            <div class="tasks__header">
-                <h2 class="tasks__title" id="tasks-heading">Tasks</h2>
-                <button class="button button--tasks__options js-task-options-button" aria-label="More task options">
-                    <span class="material-symbols-outlined">more_vert</span>
-                </button>
-            </div>
-            <!-- Button to add a task -->
-            <button class="button button--tasks__add js-add-task-button">
-                <span class="material-symbols-outlined">
-                    add
-                </span>
-                Add Task
-            </button>
-            <div class="tasks__display">
-                <!-- Will show the tasks here -->
-            </div>
-        </section>
-    </main>
-    <section class="settings js-settings" aria-labelledby="settings">
-        <h2>Settings</h2>
-        <div class="settings__options">
-            <p>Auto Start Breaks</p>
-            <label class="settings__options--auto-starts-switch">
-                <input type="checkbox"
-                    class="settings__options--auto-starts-input js-settings__options--auto-starts-input" />
-                <span class="settings__options--auto-starts-switch-slider"></span>
-            </label>
-        </div>
-        <div class="settings__options">
-            <p>Auto Start Focus</p>
-            <label class="settings__options--auto-starts-switch">
-                <input type="checkbox"
-                    class="settings__options--auto-starts-input js-settings__options--auto-starts-input" />
-                <span class="settings__options--auto-starts-switch-slider"></span>
-            </label>
-        </div>
-        <div class="settings__options">
-            <p>Long Break Every <span class="js-settings__options--long-break-interval--text">3</span> Breaks</p>
-            <input class="settings__numbers-input js-settings__options--long-break-interval"
-                type="number" placeholder="3">
-        </div>
-        <div class="settings__options settings__timers">
-            <p>TIMERS</p>
-            <div class="settings__timers--inputs">
-                <label class="settings__timers--labels">
-                    Focus
-                    <input class="settings__numbers-input js-settings__numbers-input--focus" type="number" placeholder="25">
-                </label>
-                <label class="settings__timers--labels">
-                    Break
-                    <input class="settings__numbers-input js-settings__numbers-input--break" type="number" placeholder="5">
-                </label>
-                <label class="settings__timers--labels">
-                    Long Break
-                    <input class="settings__numbers-input js-settings__numbers-input--long-break" type="number" placeholder="15">
-                </label>
-            </div>
-        </div>
     </section>
+
 
 
     <script src="./script.js"></script>

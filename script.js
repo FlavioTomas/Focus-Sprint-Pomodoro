@@ -3,12 +3,13 @@
 
 
 
+
 // Getting buttons
 const focusButton = document.querySelector('.js-focus-button')
 const breakButton = document.querySelector('.js-break-button')
 const longBreakButton = document.querySelector('.js-long-break-button')
 const timerModesButtons = document.querySelectorAll('.button--time-mode')
-const body = document.querySelector('.body')
+const mainContainer = document.querySelector('.main-container')
 const timerDisplay = document.querySelector('.js-timer-display')
 const darkModeToggle = document.querySelector('.js-dark-mode-toggle')
 const playPauseButton = document.querySelector('.js-play-pause-button');
@@ -16,6 +17,7 @@ const resetButton = document.querySelector('.js-reset-button');
 const skipButton = document.querySelector('.js-skip-button')
 const settingsButton = document.querySelector('.js-settings-button')
 const settingsForm = document.querySelector('.js-settings')
+const usersFocusTime = document.querySelector('.js-settings__numbers-input--focus')
 // Getting CSS styles
 const rootElement = document.documentElement;
 const styles = getComputedStyle(rootElement);
@@ -26,8 +28,10 @@ let timerInterval = null
 
 
 
+
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 //----------------------------------------------------------------------------------   Themes Section   ----------------------------------------------------------------------------------//
+
 
 
 
@@ -39,7 +43,7 @@ function changeBackgroundColor(newColor) {
 
 // Function with the theme colors of focus mode both in light and dark mode
 const focusButtonTheme = () => {
-    if (body.classList.contains('dark-mode')) {
+    if (mainContainer.classList.contains('dark-mode')) {
         changeBackgroundColor("#1E2A3A")
         rootElement.style.setProperty('--color-accent', '#00C896');
         rootElement.style.setProperty('--color-accent-hover', '#68dbbe');
@@ -59,7 +63,7 @@ const focusButtonTheme = () => {
 
 // Function with the theme colors of break mode both in light and dark mode
 const breakButtonTheme = () => {
-    if (body.classList.contains('dark-mode')) {
+    if (mainContainer.classList.contains('dark-mode')) {
         changeBackgroundColor("#0f2e24ff")
         rootElement.style.setProperty('--color-accent', '#52d864ff');
         rootElement.style.setProperty('--color-accent-hover', '#61ff76ff');
@@ -79,7 +83,7 @@ const breakButtonTheme = () => {
 
 // Function with the theme colors of longBreak mode both in light and dark mode
 const longBreakButtonTheme = () => {
-    if (body.classList.contains('dark-mode')) {
+    if (mainContainer.classList.contains('dark-mode')) {
         changeBackgroundColor("#461935")
         rootElement.style.setProperty('--color-accent', '#b82f83ff');
         rootElement.style.setProperty('--color-accent-hover', '#f53fafff');
@@ -99,14 +103,14 @@ const longBreakButtonTheme = () => {
 
 // Function with the theme colors of the text both in light and dark mode
 const darkModeTheme = () => {
-    if (body.classList.contains('dark-mode')) {
+    if (mainContainer.classList.contains('dark-mode')) {
         changeBackgroundColor("#e7ffebff");
         rootElement.style.setProperty('--color-text-primary', '#1f1f1fff');
         rootElement.style.setProperty('--color-accent', '#1E2A3A');
         rootElement.style.setProperty('--color-accent-hover', '#374e6bff');
         rootElement.style.setProperty('--color-surface', '#afaeaeff');
         rootElement.style.setProperty('--color-muted', '#000000ff');
-        body.classList.remove('dark-mode')
+        mainContainer.classList.remove('dark-mode')
     } else {
         changeBackgroundColor("#1E2A3A")
         rootElement.style.setProperty('--color-text-primary', '#F0F0F0');
@@ -114,7 +118,7 @@ const darkModeTheme = () => {
         rootElement.style.setProperty('--color-accent-hover', '#68dbbe');
         rootElement.style.setProperty('--color-surface', '#162033');
         rootElement.style.setProperty('--color-muted', '#A0AEC0');
-        body.classList.add('dark-mode')
+        mainContainer.classList.add('dark-mode')
     }
     timerModesButtons.forEach(btn => { btn.classList.remove('active') })
     focusButton.classList.add('active')
@@ -133,8 +137,10 @@ darkModeToggle.addEventListener('click', darkModeTheme)
 
 
 
+
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 //----------------------------------------------------------------------------------   Timers Section   ----------------------------------------------------------------------------------//
+
 
 
 
@@ -328,6 +334,7 @@ resetButton.addEventListener('click', () => {
 
 
 
+
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 //----------------------------------------------------------------------------------   Forms Section   ----------------------------------------------------------------------------------//
 
@@ -340,4 +347,20 @@ const showSettingsForm = () => {
 
 
 
+const changeFocusTime = () => {
+    focusTime = usersFocusTime.value * 60
+    updateTimerDisplay(focusTime)
+}
+
+
+
+
+
+
 settingsButton.addEventListener('click', showSettingsForm)
+usersFocusTime.addEventListener('change', changeFocusTime)
+mainContainer.addEventListener('click', (event) => {
+    if (!settingsButton.contains(event.target) && !settingsForm.contains(event.target) && settingsForm.classList.contains('showing-settings') && !darkModeToggle.contains(event.target)) {
+        settingsForm.classList.remove('showing-settings')
+    }
+})

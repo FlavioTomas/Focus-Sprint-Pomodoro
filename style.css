@@ -24,11 +24,11 @@
 
 html,
 body {
-    height: 100%;
     transition: 0.5s ease-in-out;
 }
 
-body {
+.main-container {
+    height: 100vh;
     background-color: var(--color-background);
     color: var(--color-text-primary);
     font-family: var(--font-body);
@@ -303,7 +303,7 @@ input:checked+.settings__options--auto-starts-switch-slider:before {
 .settings__timers--inputs {
     display: inline-flex;
     width: 100%;
-    gap: 25%;
+    gap: 5%;
 }
 
 .settings__timers--labels {
