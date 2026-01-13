@@ -70,7 +70,7 @@ header {
 
 .button-icon:hover {
     opacity: .7;
-} 
+}
 
 .button-icon:active {
     transition: none;
@@ -126,13 +126,13 @@ main {
 .button--primary {
     background-color: var(--color-accent);
     color: var(--color-background);
-    font-weight:800;
+    font-weight: 800;
     font-size: 1.25rem;
     padding: 20px 70px;
     transition: 0.5s;
 }
 
-.button--paused {
+.button--playing {
     background-color: var(--color-accent-hover);
     transform: translateY(-0.7vh);
 }
@@ -204,4 +204,27 @@ main {
 .active {
     background-color: var(--color-surface);
     transform: translateY(-0.3vh);
+}
+
+.settings {
+    background-color: var(--color-surface);
+    height: 80%;
+    width: clamp(70px, 70%, 600px);
+    position: fixed;
+    border-radius: var(--border-radius);
+    padding: 2vh 1vh;
+    top: 10%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5vh;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 200ms ease, visibility 0s linear 200ms;
+}
+
+.settings.showing-settings {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 200ms ease, visibility 0s;
 }

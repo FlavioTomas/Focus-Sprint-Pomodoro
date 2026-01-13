@@ -3,7 +3,7 @@
 
 
 
-// Getting modes buttons
+// Getting buttons
 const focusButton = document.querySelector('.js-focus-button')
 const breakButton = document.querySelector('.js-break-button')
 const longBreakButton = document.querySelector('.js-long-break-button')
@@ -14,6 +14,8 @@ const darkModeToggle = document.querySelector('.js-dark-mode-toggle')
 const playPauseButton = document.querySelector('.js-play-pause-button');
 const resetButton = document.querySelector('.js-reset-button');
 const skipButton = document.querySelector('.js-skip-button')
+const settingsButton = document.querySelector('.js-settings-button')
+const settingsForm = document.querySelector('.js-settings')
 // Getting CSS styles
 const rootElement = document.documentElement;
 const styles = getComputedStyle(rootElement);
@@ -83,7 +85,7 @@ const longBreakButtonTheme = () => {
         rootElement.style.setProperty('--color-accent-hover', '#f53fafff');
         rootElement.style.setProperty('--color-surface', '#2c0c20ff');
     } else {
-        changeBackgroundColor("#d776e4ff")
+        changeBackgroundColor("rgb(238, 159, 248)")
         rootElement.style.setProperty('--color-accent', '#240129ff');
         rootElement.style.setProperty('--color-accent-hover', '#480052ff');
         rootElement.style.setProperty('--color-surface', '#a053aaff');
@@ -213,10 +215,10 @@ const updateTimerDisplay = time => {
 const updatePlayButton = (condition) => {
     if (condition) {
         playPauseButton.textContent = 'Play'
-        playPauseButton.classList.remove('button--paused')
+        playPauseButton.classList.remove('button--playing')
     } else {
         playPauseButton.textContent = 'Pause'
-        playPauseButton.classList.add('button--paused')
+        playPauseButton.classList.add('button--playing')
     }
 }
 
@@ -313,3 +315,19 @@ resetButton.addEventListener('click', () => {
         resetTimer(longBreakTime)
     }
 })
+
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
+//----------------------------------------------------------------------------------   Forms Section   ----------------------------------------------------------------------------------//
+
+
+
+
+const showSettingsForm = () => {
+    settingsForm.classList.toggle('showing-settings');
+}
+
+
+
+settingsButton.addEventListener('click', showSettingsForm)
