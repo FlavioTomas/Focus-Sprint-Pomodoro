@@ -304,6 +304,7 @@ input:checked+.settings__options--auto-starts-switch-slider:before {
     display: inline-flex;
     width: 100%;
     gap: 5%;
+    justify-content: space-evenly;
 }
 
 .settings__timers--labels {

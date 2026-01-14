@@ -22,6 +22,8 @@ const usersBreakTime = document.querySelector('.js-settings__numbers-input--brea
 const usersLongBreakTime = document.querySelector('.js-settings__numbers-input--long-break')
 const usersLongBreakInterval = document.querySelector('.js-settings__options--long-break-interval')
 const showLongBreakInterval = document.querySelector('.js-settings__options--long-break-interval--text')
+const breaksAutoStartInput = document.querySelector('.js-settings__options--auto-starts-input')
+const focusAutoStartInput = document.querySelector('.js-settings__options--auto-starts-input')
 // Getting CSS styles
 const rootElement = document.documentElement;
 const styles = getComputedStyle(rootElement);
@@ -58,7 +60,7 @@ const focusButtonTheme = () => {
         rootElement.style.setProperty('--color-accent-hover', '#374e6bff');
         rootElement.style.setProperty('--color-surface', '#afaeaeff');
     }
-    updateTimerDisplay(focusTime)
+    updateTimerDisplay(timers.focus)
     clearInterval(timerInterval)
     focusButton.classList.add('active')
     updatePlayButton(true)
@@ -78,7 +80,7 @@ const breakButtonTheme = () => {
         rootElement.style.setProperty('--color-accent-hover', '#004721ff');
         rootElement.style.setProperty('--color-surface', '#3ea381ff');
     }
-    updateTimerDisplay(breakTime)
+    updateTimerDisplay(timers.break)
     clearInterval(timerInterval)
     breakButton.classList.add('active')
     updatePlayButton(true)
@@ -98,7 +100,7 @@ const longBreakButtonTheme = () => {
         rootElement.style.setProperty('--color-accent-hover', '#480052ff');
         rootElement.style.setProperty('--color-surface', '#a053aaff');
     }
-    updateTimerDisplay(longBreakTime)
+    updateTimerDisplay(timers.longBreak)
     clearInterval(timerInterval)
     longBreakButton.classList.add('active')
     updatePlayButton(true)
@@ -125,8 +127,8 @@ const darkModeTheme = () => {
         mainContainer.classList.add('dark-mode')
     }
     timerModesButtons.forEach(btn => { btn.classList.remove('active') })
-    focusButton.classList.add('active')
-    updateTimerDisplay(focusTime)
+    focusButton.classList.toggle('active')
+    updateTimerDisplay(timers.focus)
 }
 
 
@@ -148,199 +150,189 @@ darkModeToggle.addEventListener('click', darkModeTheme)
 
 
 
-// timers amount and turning into seconds
-let focusTime = 25
-let breakTime = 5
-let longBreakTime = 15
-let longBreakInterval = 6
-focusTime *= 60;
-breakTime *= 60;
-longBreakTime *= 60;
+// --- Variables to control the timers ---
+let currentMode = 'focus'; // Saves the active mode ('focus', 'break', 'longBreak')
+let endTime = 0;           // Saves the exact timestamp of when should end
 
 
-// Function that plays the timer on focus mode
-function focusTimer() {
-    if (playPauseButton.classList.contains('playing')) {
-        clearInterval(timerInterval)
-        playPauseButton.classList.remove('playing')
-        updatePlayButton(true)
-    } else {
-        timerInterval = setInterval(() => {
-            focusTime--;
+// All the timers in an object to easy use
+const timers = {
+    focus: 25 * 60,
+    break: 5 * 60,
+    longBreak: 15 * 60
+};
 
-            updateTimerDisplay(focusTime)
-        }, 1000);
-        playPauseButton.classList.add('playing')
-        updatePlayButton(false)
+
+
+let remainingTimes = { ...timers };
+
+
+// The initial time values
+let focusTime = timers.focus;
+let breakTime = timers.break;
+let longBreakTime = timers.longBreak;
+let longBreakInterval = 6;
+
+
+// Function to make the timer precise
+function tick() {
+    // Calculates the actual remaining time in seconds
+    const timeLeft = Math.round((endTime - Date.now()) / 1000);
+
+    // if the time runs out, clear the interval and skip to the next mode.
+    if (timeLeft < 0) {
+        clearInterval(timerInterval);
+        skipMode(breaksAutoStart);
+        return;
     }
+    updateTimerDisplay(timeLeft);
 }
 
 
-// Function that plays the timer on break mode
-function breakTimer() {
-    if (playPauseButton.classList.contains('playing')) {
-        clearInterval(timerInterval)
-        playPauseButton.classList.remove('playing')
-        updatePlayButton(true)
-    } else {
-        timerInterval = setInterval(() => {
-            breakTime--;
+// Function to make the timer run
+function startTimer() {
+    const duration = remainingTimes[currentMode];
 
-            updateTimerDisplay(breakTime)
-        }, 1000);
-        playPauseButton.classList.add('playing')
-        updatePlayButton(false)
-    }
+    if (duration <= 0) return;
+
+    // Calculates the final timestamp.
+    endTime = Date.now() + duration * 1000;
+
+    // Starts the setInterval to run the 'tick' function every second.
+    timerInterval = setInterval(tick, 1000);
+
+    playPauseButton.classList.add('playing');
+    updatePlayButton(false);
 }
 
 
-// Function that plays the timer on longBreak mode
-function longBreakTimer() {
-    if (playPauseButton.classList.contains('playing')) {
-        clearInterval(timerInterval)
-        playPauseButton.classList.remove('playing')
-        updatePlayButton(true)
-    } else {
-        timerInterval = setInterval(() => {
-            longBreakTime--;
+// Function to stop the timer
+function pauseTimer() {
+    clearInterval(timerInterval);
 
-            updateTimerDisplay(longBreakTime)
-        }, 1000);
-        playPauseButton.classList.add('playing')
-        updatePlayButton(false)
-    }
+    // Saves exactly how much time was left when you paused.
+    const timeLeft = Math.round((endTime - Date.now()) / 1000);
+    remainingTimes[currentMode] = timeLeft > 0 ? timeLeft : 0;
+
+    playPauseButton.classList.remove('playing');
+    updatePlayButton(true);
 }
 
 
-// function that update the timer display (to be used in any mode)
+// --- Interface Functions ---
+
+
+// Function to update the stopwatch in the screen
 const updateTimerDisplay = time => {
     const minutes = Math.floor(time / 60);
     const seconds = time % 60;
     const formattedTime = `${minutes}:${String(seconds).padStart(2, '0')}`;
     timerDisplay.textContent = formattedTime;
     document.title = `${formattedTime} - Focus Sprint`;
-}
+};
 
 
-// function that update the play/pause button style (my goal is to use in any mode)
-const updatePlayButton = (condition) => {
-    if (condition) {
-        playPauseButton.textContent = 'PLAY'
-        playPauseButton.classList.remove('button--playing')
+// Function to alternate between the play and pause
+const updatePlayButton = (isPaused) => {
+    playPauseButton.textContent = isPaused ? 'PLAY' : 'PAUSE';
+    playPauseButton.classList.toggle('button--playing', !isPaused);
+};
+
+
+// Function to reset the timer
+const resetTimer = () => {
+    clearInterval(timerInterval);
+    remainingTimes[currentMode] = totalDurations[currentMode]; // Reset the remaining time.
+    updateTimerDisplay(remainingTimes[currentMode]);
+    playPauseButton.classList.remove('playing');
+    updatePlayButton(true);
+};
+
+
+// Function to skip to the next mode
+const skipMode = (AutoStart) => {
+    clearInterval(timerInterval);
+    playPauseButton.classList.remove('playing');
+    updatePlayButton(true);
+
+    const currentActiveButton = document.querySelector('.button--time-mode.active');
+    let currentIndex = Array.from(timerModesButtons).indexOf(currentActiveButton);
+
+    timerModesButtons.forEach(btn => btn.classList.remove('active'));
+    let nextIndex = (currentIndex + 1) % timerModesButtons.length;
+
+    // Logic for the Long Break Interval
+    if (longBreakInterval == 0) {
+        nextIndex = 2;
+        longBreakInterval = usersLongBreakInterval.value == '' ? 7 : (usersLongBreakInterval.value * 2) + 1;
     } else {
-        playPauseButton.textContent = 'PAUSE'
-        playPauseButton.classList.add('button--playing')
-    }
-}
-
-
-// function that resets the timer, both the variable and the display timer
-const resetTimer = timer => {
-    if (timer === focusTime) {
-        focusTime = usersFocusTime.value == '' ? 25 : usersFocusTime.value
-        focusTime *= 60;
-        clearInterval(timerInterval)
-        updateTimerDisplay(focusTime)
-    } if (timer === breakTime) {
-        breakTime = usersBreakTime.value == '' ? 5 : usersBreakTime.value
-        breakTime *= 60;
-        clearInterval(timerInterval)
-        updateTimerDisplay(breakTime)
-    } if (timer === longBreakTime) {
-        longBreakTime = usersLongBreakTime.value == '' ? 15 : usersLongBreakTime.value
-        longBreakTime *= 60;
-        clearInterval(timerInterval)
-        updateTimerDisplay(longBreakTime)
-    }
-    updatePlayButton(true)
-    playPauseButton.classList.remove('playing')
-}
-
-
-// function to skip to the next mode
-const skipMode = () => {
-    let skipTo = null
-    timerModesButtons.forEach((button, i) => {
-        if (button.classList.contains('active')) {
-            skipTo = i + 1
-            button.classList.remove('active')
+        longBreakInterval--
+        if (nextIndex == 2) {
+            nextIndex = 0
         }
-    })
-    if (skipTo == 3) {
-        skipTo = 0
     }
-    timerModesButtons.forEach((button, i) => {
-        if (skipTo == i) {
-            if (button.dataset.mode === 'focus') {
-                longBreakInterval--
-                focusButtonTheme()
-            } else if (button.dataset.mode === 'break') {
-                if (longBreakInterval == 0) {
-                    longBreakButtonTheme()
-                    longBreakInterval = usersLongBreakInterval.value == '' ? 7 : (usersLongBreakInterval.value * 2) + 1
-                } else {
-                    longBreakInterval--
-                    breakButtonTheme()
-                }
-            } else if (button.dataset.mode === 'longBreak') {
-                longBreakInterval--
-                focusButtonTheme()
-            }
-        }
-    })
-    updatePlayButton(true)
+
     console.log(longBreakInterval)
-}
+    const nextButton = timerModesButtons[nextIndex];
+    currentMode = nextButton.dataset.mode; // Updates the current mode
+
+    // Calls the corresponding theme function
+    if (currentMode === 'focus') focusButtonTheme();
+    if (currentMode === 'break') breakButtonTheme();
+    if (currentMode === 'longBreak') longBreakButtonTheme();
+
+    // If autoStart is enabled, it starts the next timer
+    if (AutoStart == 'on') {
+        startTimer();
+    }
+};
 
 
-// Giving a class to the button that is active in the moment 
+
+// --- Timer Section Events ---
+
+
+
+playPauseButton.addEventListener('click', () => {
+    if (playPauseButton.classList.contains('playing')) {
+        pauseTimer();
+    } else {
+        startTimer();
+    }
+});
+resetButton.addEventListener('click', resetTimer);
+skipButton.addEventListener('click', () => skipMode(false));
 timerModesButtons.forEach(button => {
     button.addEventListener('click', () => {
-        timerModesButtons.forEach(btn => { btn.classList.remove('active') })
-        button.classList.add('active')
-    })
+        // If a timer is running, save the progress before switching.
+        if (playPauseButton.classList.contains('playing')) {
+            const timeLeft = Math.round((endTime - Date.now()) / 1000);
+            remainingTimes[currentMode] = timeLeft > 0 ? timeLeft : 0;
+        }
+
+        clearInterval(timerInterval);
+        timerModesButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        currentMode = button.dataset.mode;
+        updateTimerDisplay(remainingTimes[currentMode]);
+        playPauseButton.classList.remove('playing');
+        updatePlayButton(true);
+    });
 });
 
-
-//------- Events of timer section -------//
-
-
-skipButton.addEventListener('click', skipMode)
-
-
-// Configuring the correct timer to which mode
-playPauseButton.addEventListener('click', () => {
-    for (const button of timerModesButtons) {
-        if (button.classList.contains('active')) {
-            if (button.dataset.mode === 'focus') {
-                focusTimer()
-            } else if (button.dataset.mode === 'break') {
-                breakTimer()
-            } else if (button.dataset.mode === 'longBreak') {
-                longBreakTimer()
-            }
-            break
-        }
-    }
-})
-
-
-// Ensuring that the reset of one mode does not affect the others 
-resetButton.addEventListener('click', () => {
-    if (focusButton.classList.contains('active')) {
-        resetTimer(focusTime)
-    } else if (breakButton.classList.contains('active')) {
-        resetTimer(breakTime)
-    } else if (longBreakButton.classList.contains('active')) {
-        resetTimer(longBreakTime)
-    }
-})
 
 
 
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
-//----------------------------------------------------------------------------------   Forms Section   ----------------------------------------------------------------------------------//
+//----------------------------------------------------------------------------------   Settings Section   ----------------------------------------------------------------------------------//
+
+
+
+
+let breaksAutoStart = 'off'
+let focusAutoStart = 'off'
+
 
 
 
@@ -349,7 +341,7 @@ const showSettingsForm = () => {
     settingsForm.classList.toggle('showing-settings');
     timerModesButtons.forEach(button => {
         if (button.classList.contains('active')) {
-            button.dataset.mode == 'focus' ? updateTimerDisplay(focusTime) : button.dataset.mode == 'break' ? updateTimerDisplay(breakTime) : updateTimerDisplay(longBreakTime)
+            button.dataset.mode == 'focus' ? updateTimerDisplay(remainingTimes.focus) : button.dataset.mode == 'break' ? updateTimerDisplay(remainingTimes.break) : updateTimerDisplay(remainingTimes.longBreak)
         }
     })
 }
@@ -357,19 +349,37 @@ const showSettingsForm = () => {
 
 
 const changeFocusTime = () => {
-    focusTime = usersFocusTime.value * 60
+    const newTime = usersFocusTime.value || 25;
+    timers.focus = newTime * 60;
+    remainingTimes.focus = newTime * 60
+
+    if (currentMode === 'focus') {
+        updateTimerDisplay(timers.focus);
+    }
 }
 
 
 
 const changeBreakTime = () => {
-    breakTime = usersBreakTime.value * 60
+    const newTime = usersBreakTime.value || 5;
+    timers.break = newTime * 60;
+    remainingTimes.break = newTime * 60;
+
+    if (currentMode === 'break') {
+        updateTimerDisplay(timers.break);
+    }
 }
 
 
 
 const changeLongBreakTime = () => {
-    longBreakTime = usersLongBreakTime.value * 60
+    const newTime = usersLongBreakTime.value || 15;
+    timers.longBreak = newTime * 60;
+    remainingTimes.longBreak = newTime * 60;
+
+    if (currentMode === 'longBreak') {
+        updateTimerDisplay(timers.longBreak);
+    }
 }
 
 
@@ -381,9 +391,15 @@ const changeLongBreakInterval = () => {
 
 
 
+const changeBreaksAutoStart = () => {
+    breaksAutoStart = breaksAutoStartInput.value
+}
 
 
 
+const changeFocusAutoStart = () => {
+    focusAutoStart = focusAutoStartInput.value
+}
 
 
 
@@ -397,3 +413,5 @@ mainContainer.addEventListener('click', (event) => {
     }
 })
 usersLongBreakInterval.addEventListener('change', changeLongBreakInterval)
+breaksAutoStartInput.addEventListener('click', changeBreaksAutoStart)
+focusAutoStartInput.addEventListener('click', changeFocusAutoStart)
