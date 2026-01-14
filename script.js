@@ -18,6 +18,8 @@ const skipButton = document.querySelector('.js-skip-button')
 const settingsButton = document.querySelector('.js-settings-button')
 const settingsForm = document.querySelector('.js-settings')
 const usersFocusTime = document.querySelector('.js-settings__numbers-input--focus')
+const usersBreakTime = document.querySelector('.js-settings__numbers-input--break')
+const usersLongBreakTime = document.querySelector('.js-settings__numbers-input--long-break')
 // Getting CSS styles
 const rootElement = document.documentElement;
 const styles = getComputedStyle(rootElement);
@@ -233,17 +235,17 @@ const updatePlayButton = (condition) => {
 // function that resets the timer, both the variable and the display timer
 const resetTimer = timer => {
     if (timer === focusTime) {
-        focusTime = 25
+        focusTime = usersFocusTime.value == '' ? 25 : usersFocusTime.value
         focusTime *= 60;
         clearInterval(timerInterval)
         updateTimerDisplay(focusTime)
     } if (timer === breakTime) {
-        breakTime = 5
+        breakTime = usersBreakTime.value == '' ? 5 : usersBreakTime.value
         breakTime *= 60;
         clearInterval(timerInterval)
         updateTimerDisplay(breakTime)
     } if (timer === longBreakTime) {
-        longBreakTime = 15
+        longBreakTime = usersLongBreakTime.value == '' ? 15 : usersLongBreakTime.value
         longBreakTime *= 60;
         clearInterval(timerInterval)
         updateTimerDisplay(longBreakTime)
@@ -343,24 +345,39 @@ resetButton.addEventListener('click', () => {
 
 const showSettingsForm = () => {
     settingsForm.classList.toggle('showing-settings');
+    timerModesButtons.forEach(button => {
+        if (button.classList.contains('active')) {
+            button.dataset.mode == 'focus' ? updateTimerDisplay(focusTime) : button.dataset.mode == 'break' ? updateTimerDisplay(breakTime) : updateTimerDisplay(longBreakTime)
+        }
+    })
 }
 
 
 
 const changeFocusTime = () => {
     focusTime = usersFocusTime.value * 60
-    updateTimerDisplay(focusTime)
 }
 
 
 
+const changeBreakTime = () => {
+    breakTime = usersBreakTime.value * 60
+}
+
+
+
+const changeLongBreakTime = () => {
+    longBreakTime = usersLongBreakTime.value * 60
+}
 
 
 
 settingsButton.addEventListener('click', showSettingsForm)
 usersFocusTime.addEventListener('change', changeFocusTime)
+usersBreakTime.addEventListener('change', changeBreakTime)
+usersLongBreakTime.addEventListener('change', changeLongBreakTime)
 mainContainer.addEventListener('click', (event) => {
     if (!settingsButton.contains(event.target) && !settingsForm.contains(event.target) && settingsForm.classList.contains('showing-settings') && !darkModeToggle.contains(event.target)) {
-        settingsForm.classList.remove('showing-settings')
+        showSettingsForm()
     }
 })
