@@ -102,32 +102,35 @@
         <!-- Settings Section -->
         <section class="settings js-settings" aria-labelledby="settings">
             <h2>Settings</h2>
-            <!-- Breaks Auto Start -->
-            <div class="settings__options">
-                <p>Auto Start Breaks</p>
-                <label class="settings__options--auto-starts-switch">
-                    <input type="checkbox"
-                        class="settings__options--auto-starts-input js-settings__options--auto-starts-input" />
-                    <span class="settings__options--auto-starts-switch-slider"></span>
-                </label>
-            </div>
-            <!-- Focus Auto Start -->
-            <div class="settings__options">
-                <p>Auto Start Focus</p>
-                <label class="settings__options--auto-starts-switch">
-                    <input type="checkbox"
-                        class="settings__options--auto-starts-input js-settings__options--auto-starts-input" />
-                    <span class="settings__options--auto-starts-switch-slider"></span>
-                </label>
-            </div>
-            <!-- Long Break Interval -->
-            <div class="settings__options">
-                <p>Long Break Every <span class="js-settings__options--long-break-interval--text">3</span> Breaks</p>
-                <input class="settings__numbers-input js-settings__options--long-break-interval" type="number"
-                    placeholder="3">
+            <div class="settings__section">
+                <!-- Breaks Auto Start -->
+                <div class="settings__options settings__options--1-line">
+                    <p>Auto Start Breaks</p>
+                    <label class="settings__options--switch">
+                        <input type="checkbox"
+                            class="settings__options--switch-input js-settings__options--auto-starts-input" />
+                        <span class="settings__options--switch-slider"></span>
+                    </label>
+                </div>
+                <!-- Focus Auto Start -->
+                <div class="settings__options settings__options--1-line">
+                    <p>Auto Start Focus</p>
+                    <label class="settings__options--switch">
+                        <input type="checkbox"
+                            class="settings__options--switch-input js-settings__options--auto-starts-input" />
+                        <span class="settings__options--switch-slider"></span>
+                    </label>
+                </div>
+                <!-- Long Break Interval -->
+                <div class="settings__options settings__options--1-line">
+                    <p>Long Break Every <span class="js-settings__options--long-break-interval--text">3</span> Breaks
+                    </p>
+                    <input class="settings__numbers-input js-settings__options--long-break-interval" type="number"
+                        placeholder="3">
+                </div>
             </div>
             <!-- Timers Change -->
-            <div class="settings__options settings__timers">
+            <div class="settings__section">
                 <p>TIMERS</p>
                 <div class="settings__timers--inputs">
                     <label class="settings__timers--labels">
@@ -145,6 +148,27 @@
                         <input class="settings__numbers-input js-settings__numbers-input--long-break" type="number"
                             placeholder="15">
                     </label>
+                </div>
+            </div>
+            <!-- Notifications Settings -->
+            <div class="settings__section">
+                <p>NOTIFICATIONS</p>
+                <!-- Sound Notification -->
+                <div class="settings__options settings__options--1-line">
+                    <p class="settings__notifications--text">Sound Alarm When Timer is Finished</p>
+                    <label class="settings__options--switch">
+                        <input type="checkbox"
+                            class="settings__options--switch-input js-settings__notifications--sound-switch-input" />
+                        <span class="settings__options--switch-slider"></span>
+                    </label>
+                </div>
+                <!-- Pop Up Notification -->
+                <div class="settings__options settings__options--1-line">
+                    <p class="settings__notifications--text">Pop Up When Timer is Finished</p>
+                    <label class="settings__options--switch">
+                        <input type="checkbox"
+                            class="settings__options--switch-input js-settings__notifications--pop-up-switch-input" />
+                        <span class="settings__options--switch-slider"></span>
                 </div>
             </div>
         </section>

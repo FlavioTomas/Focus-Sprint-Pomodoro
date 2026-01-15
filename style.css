@@ -232,28 +232,40 @@ main {
     transition: opacity 200ms ease, visibility 0s;
 }
 
-.settings__options {
+.settings__section {
     width: 90%;
-    display: inline-flex;
+    margin-top: 5%;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    gap: 1vh;
+}
+
+.settings__options {
+    width: 100%;
     margin-top: 5%;
 }
 
-.settings__options--auto-starts-switch {
+.settings__options--1-line {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.settings__options--switch {
     position: relative;
     display: inline-block;
     width: 60px;
     height: 34px;
 }
 
-.settings__options--auto-starts-input {
+.settings__options--switch-input {
     opacity: 0;
     width: 0;
     height: 0;
 }
 
-.settings__options--auto-starts-switch-slider {
+.settings__options--switch-slider {
     position: absolute;
     cursor: pointer;
     top: 0;
@@ -265,7 +277,7 @@ main {
     border-radius: 34px;
 }
 
-.settings__options--auto-starts-switch-slider:before {
+.settings__options--switch-slider:before {
     position: absolute;
     content: "";
     height: 26px;
@@ -277,11 +289,11 @@ main {
     border-radius: 50%;
 }
 
-input:checked+.settings__options--auto-starts-switch-slider {
+input:checked+.settings__options--switch-slider {
     background-color: #2196F3;
 }
 
-input:checked+.settings__options--auto-starts-switch-slider:before {
+input:checked+.settings__options--switch-slider:before {
     transform: translateX(26px);
 }
 
@@ -291,13 +303,6 @@ input:checked+.settings__options--auto-starts-switch-slider:before {
     border-radius: var(--border-radius);
     border: none;
     padding-left: 5px;
-}
-
-.settings__timers {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1vh;
 }
 
 .settings__timers--inputs {
@@ -311,4 +316,8 @@ input:checked+.settings__options--auto-starts-switch-slider:before {
     display: flex;
     flex-direction: column;
     gap: 5px;
+}
+
+.settings__notifications--text {
+    max-width: 70%;
 }
