@@ -169,6 +169,7 @@ main {
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    position: relative;
 }
 
 .button--tasks__options:hover {
@@ -320,4 +321,29 @@ input:checked+.settings__options--switch-slider:before {
 
 .settings__notifications--text {
     max-width: 70%;
+}
+
+.tasks__header .tasks-settings {
+    height: auto;
+    position: absolute;
+    bottom: 100%;
+    margin-bottom: 8px;
+    right: 0;
+    width: auto;
+    top: auto;
+    gap: 0;
+    padding: 0;
+}
+
+.tasks-settings__options {
+    width: 100%;
+    gap: 5px;
+    cursor: pointer;
+    padding: 10px 5px;
+    margin: 0;
+    transition: none;
+}
+
+.tasks-settings__options:hover {
+    background: rgb(30, 42, 58, 0.8);
 }

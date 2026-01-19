@@ -27,6 +27,8 @@ const focusAutoStartInput = document.querySelector('.js-settings__options--focus
 const soundNotificationInput = document.querySelector('.js-settings__notifications--sound-switch-input')
 const soundNotification = document.getElementById('sound-notification')
 const popUpInput = document.querySelector('.js-settings__notifications--pop-up-switch-input')
+const tasksSettingsButton = document.querySelector('.js-task-options-button')
+const tasksSettingsForm = document.querySelector('.js-task-settings')
 // Getting CSS styles
 const rootElement = document.documentElement;
 const styles = getComputedStyle(rootElement);
@@ -333,7 +335,7 @@ timerModesButtons.forEach(button => {
 
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
-//----------------------------------------------------------------------------------   Settings Section   ----------------------------------------------------------------------------------//
+//--------------------------------------------------------------------------------   Settings Section   ----------------------------------------------------------------------------------//
 
 
 
@@ -458,3 +460,20 @@ breaksAutoStartInput.addEventListener('change', changeBreaksAutoStart)
 focusAutoStartInput.addEventListener('change', changeFocusAutoStart)
 soundNotificationInput.addEventListener('change', changeSoundNotificationOptions)
 popUpInput.addEventListener('change', changePopUpOptions)
+
+
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
+//--------------------------------------------------------------------------------  Tasks Settings Section   ----------------------------------------------------------------- -----------//
+
+
+
+
+const showTasksSettings = () => {
+    tasksSettingsForm.  classList.toggle('showing-settings')
+}
+
+
+
+tasksSettingsButton.addEventListener('click', showTasksSettings)

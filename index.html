@@ -84,6 +84,20 @@
                     <button class="button button--tasks__options js-task-options-button" aria-label="More task options">
                         <span class="material-symbols-outlined">more_vert</span>
                     </button>
+                    <section class="settings tasks-settings js-task-settings">
+                        <div class="settings__options settings__options--1-line tasks-settings__options js-tasks-settings__options--delete-all-tasks-button">
+                            <span class="material-symbols-outlined">
+                                delete
+                            </span>
+                            <p>Delete All Tasks</p>
+                        </div>
+                        <div class="settings__options settings__options--1-line tasks-settings__options js-tasks-settings__options--delete-completed-tasks-button">
+                            <span class="material-symbols-outlined">
+                                delete
+                            </span>
+                            <p>Delete Completed Tasks</p>
+                        </div>
+                    </section>
                 </div>
                 <!-- Button to add a task -->
                 <button class="button button--tasks__add js-add-task-button">
@@ -174,7 +188,12 @@
         </section>
 
 
+
+        <section class="settings tasks-settings js-task-settings">
+            <h2>Task Settings</h2>
+        </section>
     </section>
+
 
 
     <audio id="sound-notification" src="./asssets/notification-sound.mp3" preload="auto"></audio>
