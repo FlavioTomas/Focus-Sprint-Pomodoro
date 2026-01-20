@@ -347,3 +347,178 @@ input:checked+.settings__options--switch-slider:before {
 .tasks-settings__options:hover {
     background: rgb(30, 42, 58, 0.8);
 }
+
+.tasks__display-create {
+    background-color: var(--color-surface);
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    padding: 10px;
+    border-radius: var(--border-radius);
+    gap: 5px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 200ms ease, visibility 0s linear 200ms;
+}
+
+.tasks__display-create.showing-settings {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: opacity 200ms ease, visibility 0s;
+}
+
+
+.tasks__display-create input{
+    background-color: var(--color-surface); 
+    border: none;
+    width: 100%;
+    padding: 2px 4px;
+    color: var(--color-text-primary);
+}
+
+.tasks__display-create button{
+    border: none;
+    width: 100px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    height: 20px;
+    font-weight: 500;
+    transition: .3s;
+}
+
+.tasks__display-create--buttons {
+    display: inline-flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+
+.tasks__display-create--buttons--save {
+    background-color: var(--color-accent);
+}
+
+.tasks__display-create--buttons--cancel {
+    background-color: var(--color-muted);
+}
+
+.tasks__display-create button:hover{
+    opacity: 0.7;
+}
+
+.task-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background-color: var(--color-surface);
+    padding: 12px;
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--color-accent);
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.task-item:hover {
+    background-color: #2a3b50; /* A slightly lighter surface color for hover */
+}
+
+.task-item__checkbox {
+    min-width: 18px; /* Use min-width to prevent shrinking */
+    height: 18px;
+    accent-color: var(--color-accent); /* Style the checkbox color */
+    cursor: pointer;
+}
+
+.task-item__text {
+    flex-grow: 1; /* Allows the text to take up available space */
+    transition: color 0.3s, text-decoration 0.3s;
+}
+
+.task-item--completed .task-item__text {
+    text-decoration: line-through;
+    color: var(--color-muted);
+}
+
+.task-item__options {
+    margin-left: auto; /* Pushes the options button to the far right */
+}
+
+/* Utility class to hide elements */
+.hidden {
+    display: none !important;
+}
+
+/* --- Styles for Task Options Menu and Edit Mode --- */
+
+/* Make the task item a positioning parent for the menu */
+.task-item {
+    position: relative;
+}
+
+/* The context menu that appears */
+.task-item__menu {
+    position: absolute;
+    top: 40px; /* Position it below the three-dots button */
+    right: 0;
+    background-color: #2a3b50; /* A bit lighter than the surface */
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 120px;
+    z-index: 10;
+    overflow: hidden; /* Ensures border-radius applies to children */
+    display: none; /* Hidden by default */
+}
+
+/* Show the menu when the active class is added */
+.task-item__menu.active {
+    display: block;
+}
+
+/* Style for each option in the menu */
+.task-item__menu-option {
+    padding: 10px 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+}
+
+.task-item__menu-option:hover {
+    background-color: var(--color-surface);
+}
+
+/* Styles for the task when it's being edited */
+.task-item--editing .task-item__text,
+.task-item--editing .task-item__checkbox,
+.task-item--editing .task-item__options {
+    display: none; /* Hide the original text, checkbox, and options button */
+}
+
+.task-item__edit-container {
+    display: none; /* Hide the edit container by default */
+    width: 100%;
+    gap: 8px;
+}
+
+.task-item--editing .task-item__edit-container {
+    display: flex; /* Show the edit container when in editing mode */
+    align-items: center;
+}
+
+.task-item__edit-input {
+    flex-grow: 1;
+    background-color: var(--color-background);
+    border: 1px solid var(--color-muted);
+    color: var(--color-text-primary);
+    padding: 6px 8px;
+    border-radius: var(--border-radius);
+}
+
+.task-item__edit-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-text-primary);
+}

@@ -85,29 +85,55 @@
                         <span class="material-symbols-outlined">more_vert</span>
                     </button>
                     <section class="settings tasks-settings js-task-settings">
-                        <div class="settings__options settings__options--1-line tasks-settings__options js-tasks-settings__options--delete-all-tasks-button">
+                        <div
+                            class="settings__options settings__options--1-line tasks-settings__options js-tasks-settings__options--delete-all-tasks-button">
                             <span class="material-symbols-outlined">
                                 delete
                             </span>
                             <p>Delete All Tasks</p>
                         </div>
-                        <div class="settings__options settings__options--1-line tasks-settings__options js-tasks-settings__options--delete-completed-tasks-button">
+                        <div
+                            class="settings__options settings__options--1-line tasks-settings__options js-tasks-settings__options--delete-completed-tasks-button">
                             <span class="material-symbols-outlined">
                                 delete
                             </span>
                             <p>Delete Completed Tasks</p>
                         </div>
+                        <div
+                            class="settings__options settings__options--1-line tasks-settings__options js-tasks-settings__options--toggle-completed-tasks-button">
+                            <span class="material-symbols-outlined">
+                                disabled_visible
+                            </span>
+                            <p>Hide Completed Tasks</p>
+                        </div>
                     </section>
                 </div>
-                <!-- Button to add a task -->
-                <button class="button button--tasks__add js-add-task-button">
-                    <span class="material-symbols-outlined">
-                        add
-                    </span>
-                    Add Task
-                </button>
                 <div class="tasks__display">
+                    <!-- Button to add a task -->
+                    <button class="button button--tasks__add js-add-task-button">
+                        <span class="material-symbols-outlined">
+                            add
+                        </span>
+                        Add Task
+                    </button>
+
+
+
+                    <div class="tasks__display-create js-tasks__display-create">
+                        <input class="js-tasks__display-create--input" type="text"
+                            placeholder="What are you doing today?">
+                        <div class="tasks__display-create--buttons">
+                            <button
+                                class="tasks__display-create--buttons--save js-tasks__display-create--buttons--save">Save</button>
+                            <button
+                                class="tasks__display-create--buttons--cancel js-tasks__display-create--buttons--cancel">Cancel</button>
+                        </div>
+                    </div>
+
+
                     <!-- Will show the tasks here -->
+
+
                 </div>
             </section>
         </main>
