@@ -1,14 +1,14 @@
-# Focus Sprint — Pomodoro + Tarefas (Vanilla JS)
+# Flowtudy — Pomodoro + Tarefas (Vanilla JS)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
-[![GitHub repo](https://img.shields.io/badge/GitHub-Repository-black)](https://github.com/FlavioTomas/Focus-Sprint-Pomodoro)
-![Stars](https://img.shields.io/github/stars/FlavioTomas/Focus-Sprint-Pomodoro?style=flat)
-![Issues](https://img.shields.io/github/issues/FlavioTomas/Focus-Sprint-Pomodoro)
+[![GitHub repo](https://img.shields.io/badge/GitHub-Repository-black)](https://github.com/FlavioTomas/Flowtudy-Pomodoro)
+![Stars](https://img.shields.io/github/stars/FlavioTomas/Flowtudy-Pomodoro?style=flat)
+![Issues](https://img.shields.io/github/issues/FlavioTomas/Flowtudy-Pomodoro)
 
 Um aplicativo **Pomodoro** completo para estudos e produtividade, com **gerenciador de tarefas**, **multi-idioma**, **tema claro/escuro**, **notificações**, **indicador de ciclos** e **persistência via localStorage** — feito com **HTML, CSS e JavaScript puro**.
 
-- Repositório: <https://github.com/FlavioTomas/Focus-Sprint-Pomodoro>
-- (Opcional) GitHub Pages: <https://FlavioTomas.github.io/Focus-Sprint-Pomodoro/>
+- Repositório: <https://github.com/FlavioTomas/Flowtudy-Pomodoro>
+- (Opcional) GitHub Pages: <https://FlavioTomas.github.io/Flowtudy-Pomodoro/>
 
 ---
 
@@ -22,7 +22,7 @@ Um aplicativo **Pomodoro** completo para estudos e produtividade, com **gerencia
 
 ### Screenshot
 
-![Focus Sprint Screenshot](./assets/screenshot.png)
+![Flowtudy Screenshot](./assets/screenshot.png)
 
 ---
 
@@ -99,13 +99,13 @@ Um aplicativo **Pomodoro** completo para estudos e produtividade, com **gerencia
 1. Clone o repositório:
 
    ```bash
-   git clone https://github.com/FlavioTomas/Focus-Sprint-Pomodoro.git
+   git clone https://github.com/FlavioTomas/Flowtudy-Pomodoro.git
    ```
 
 2. Entre na pasta:
 
    ```bash
-   cd Focus-Sprint-Pomodoro
+   cd Flowtudy-Pomodoro
    ```
 
 3. Abra `index.html` com Live Server (VS Code).
@@ -137,7 +137,7 @@ http://localhost:5500
 
 URL típica:
 
-- <https://FlavioTomas.github.io/Focus-Sprint-Pomodoro/>
+- <https://FlavioTomas.github.io/Flowtudy-Pomodoro/>
 
 ---
 
@@ -170,7 +170,7 @@ No painel **Settings**, você pode:
 
 ## Persistência (localStorage)
 
-O Focus Sprint salva:
+O Flowtudy salva:
 
 - **Configurações**: `focusSprintSettings`
 - **Tarefas**: `focusSprintTasks`
@@ -218,4 +218,4 @@ Veja o arquivo **[LICENSE](./LICENSE)**.
 ## Autor
 
 **Flávio Tomás Peña Villa**  
-Projeto: **Focus Sprint** (Jan/2026)
+Projeto: **Flowtudy** (Jan/2026)
