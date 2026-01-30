@@ -997,3 +997,72 @@ ul.info-card__list li::before {
 .footer a:hover {
     text-decoration: underline;
 }
+
+/* ==========================================================================
+   11. Mobile Instructions Modal
+   ========================================================================== */
+
+.ios-modal {
+    text-align: left;
+    position: relative;
+}
+
+.ios-modal__close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+}
+
+.ios-modal__instructions {
+    list-style-position: inside;
+    padding-left: 0;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    color: var(--color-muted);
+}
+
+.ios-modal__instructions li {
+    line-height: 1.5;
+}
+
+.ios-modal__instructions li strong {
+    color: var(--color-text-primary);
+}
+
+.ios-modal__icon-example {
+    margin-top: 24px;
+    padding: 12px;
+    background-color: var(--color-background);
+    border-radius: var(--border-radius);
+    text-align: center;
+    color: var(--color-text-primary);
+    font-weight: 500;
+}
+
+.ios-modal__icon-example img {
+    display: inline-block;
+    vertical-align: middle;
+    width: 20px;
+    height: 20px;
+    margin: 0 4px;
+    filter: var(--color-text-primary)
+}
+
+.ios-modal__icon-example img[alt~="More"] {
+    width: 18px;
+    height: 18px;
+}
+
+.instructions-block {
+    display: none;
+}
+
+.modal--show-ios .instructions--ios {
+    display: block;
+}
+
+.modal--show-android .instructions--android {
+    display: block;
+}

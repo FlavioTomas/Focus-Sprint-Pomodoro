@@ -27,7 +27,7 @@
 
     <!-- In case the browser does not accept the IntersectionObserver -->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=IntersectionObserver" crossorigin="anonymous"></script>
-    
+
 
     <!-- Favicon and Stylesheet -->
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
@@ -273,6 +273,38 @@
             </div>
         </div>
     </section>
+
+    <!-- Modal de Instrucciones "Añadir a la Pantalla de Inicio" para Móvil -->
+    <div class="modal-overlay js-ios-modal-overlay">
+        <div class="modal ios-modal">
+            <button class="button button-icon ios-modal__close js-ios-modal-close" aria-label="Cerrar instrucciones">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+            <h3 class="modal__title">Activar Notificaciones en el Móvil</h3>
+            <p class="modal__text">Para que las notificaciones funcionen de forma fiable, añade Flowtudy a tu Pantalla
+                de Inicio.</p>
+            <!-- Instrucciones para iOS -->
+            <div class="instructions-block instructions--ios">
+                <ol class="ios-modal__instructions">
+                    <li>Toca el botón <strong>Compartir</strong> en la barra de herramientas de tu navegador.</li>
+                    <li>Desplázate hacia abajo y toca <strong>"Añadir a pantalla de inicio"</strong>.</li>
+                </ol>
+                <div class="ios-modal__icon-example">Toca el botón <strong>Compartir</strong> <img
+                        src="/assets/ios-share-icon.svg" alt="Icono de Compartir">.</div>
+            </div>
+            <!-- Instrucciones para Android -->
+            <div class="instructions-block instructions--android">
+                <ol class="ios-modal__instructions">
+                    <li>Toca el botón de <strong>Menú</strong> (normalmente 3 puntos) en tu navegador.</li>
+                    <li>Toca <strong>"Añadir a pantalla de inicio"</strong> o <strong>"Instalar aplicación"</strong>.
+                    </li>
+                </ol>
+                <div class="ios-modal__icon-example">Toca el botón de <strong>Menú</strong> <img
+                        src="/assets/android-more-icon.svg" alt="Icono de Más Opciones">.</div>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="footer">
         <p>© 2026 Flowtudy — <a href="https://github.com/FlavioTomas/Flowtudy-Pomodoro" target="_blank"

@@ -77,6 +77,8 @@ const modalTitle = document.querySelector('.js-modal-title');
 const modalText = document.querySelector('.js-modal-text');
 const modalConfirmBtn = document.querySelector('.js-modal-confirm');
 const modalCancelBtn = document.querySelector('.js-modal-cancel');
+const iosModalOverlay = document.querySelector('.js-ios-modal-overlay');
+const closeIosModalBtn = document.querySelector('.js-ios-modal-close');
 const progressRing = document.querySelector('.js-progress-ring');
 const radius = parseFloat(progressRing.getAttribute('r'));
 const circumference = 2 * Math.PI * radius;
@@ -562,20 +564,40 @@ const sendDesktopNotification = () => {
 
 
 /**
- * Asks for permission to send desktop notifications.
+ * Asks for permission to send notifications, or shows
+ * platform-specific instructions for mobile devices.
  * @param {boolean} shouldSave - Whether to save settings to localStorage.
  */
 const handleNotificationPermission = async (shouldSave = true) => {
+    // If it's a mobile device, show the instructions modal
+    if (isMobile()) {
+        const modal = iosModalOverlay.querySelector('.modal');
+        // Clean up old classes and add the correct one for the current OS
+        modal.classList.remove('modal--show-ios', 'modal--show-android');
+        if (isIOS()) {
+            modal.classList.add('modal--show-ios');
+        } else {
+            modal.classList.add('modal--show-android');
+        }
+        iosModalOverlay.classList.add('modal-overlay--visible');
+        popUpInput.checked = false; // Ensure the toggle remains off
+        return; // Stop the function here for mobile
+    }
+
+    // Original logic for Desktop browsers
     if (!('Notification' in window)) {
+        console.log("This browser does not support desktop notification");
         popUpInput.checked = false;
         return;
     }
+
     if (popUpInput.checked) {
         const permission = await Notification.requestPermission();
         if (permission !== 'granted') {
             popUpInput.checked = false;
         }
     }
+
     if (shouldSave) saveSettings();
 };
 
@@ -603,6 +625,20 @@ document.addEventListener('click', (event) => {
         showTasksSettings();
     }
 });
+
+
+// Event listeners for the mobile instructions modal
+if (iosModalOverlay) {
+    closeIosModalBtn.addEventListener('click', () => {
+        iosModalOverlay.classList.remove('modal-overlay--visible');
+    });
+
+    iosModalOverlay.addEventListener('click', (event) => {
+        if (event.target === iosModalOverlay) {
+            iosModalOverlay.classList.remove('modal-overlay--visible');
+        }
+    });
+}
 
 
 
@@ -1035,6 +1071,26 @@ document.addEventListener('click', (e) => {
         languageMenu.classList.remove('active');
     }
 });
+
+
+
+/**
+ * Checks if the user is on any mobile device.
+ * @returns {boolean}
+ */
+const isMobile = () => {
+    return /Mobi|Android|iPhone/i.test(navigator.userAgent);
+};
+
+/**
+ * Checks if the user is on an iOS device.
+ * @returns {boolean}
+ */
+const isIOS = () => {
+    return [
+        'iPad Simulator', 'iPhone Simulator', 'iPod Simulator', 'iPad', 'iPhone', 'iPod'
+    ].includes(navigator.platform) || (navigator.userAgent.includes("Mac") && "ontouchend" in document);
+};
 
 
 
