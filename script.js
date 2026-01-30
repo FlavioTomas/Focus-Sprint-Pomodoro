@@ -80,8 +80,8 @@ const modalCancelBtn = document.querySelector('.js-modal-cancel');
 const iosModalOverlay = document.querySelector('.js-ios-modal-overlay');
 const closeIosModalBtn = document.querySelector('.js-ios-modal-close');
 let progressRing;
-let radius;       
-let circumference; 
+let radius;
+let circumference;
 const rootElement = document.documentElement;
 let timerInterval = null;
 const cycleIndicator = document.querySelector('.js-cycle-indicator');
@@ -1079,7 +1079,28 @@ document.addEventListener('click', (e) => {
  * @returns {boolean}
  */
 const isMobile = () => {
-    return /Mobi|Android|iPhone/i.test(navigator.userAgent);
+    const userAgent = navigator.userAgent;
+
+    const mobilePatterns = [
+        /Android/i,
+        /webOS/i,
+        /iPhone/i,
+        /iPad/i,
+        /iPod/i,
+        /BlackBerry/i,
+        /Windows Phone/i,
+        /Opera Mini/i,
+        /IEMobile/i,
+        /Mobile/i
+    ];
+
+    const isMobileDevice = mobilePatterns.some(pattern => pattern.test(userAgent));
+
+    const hasTouchPoints = navigator.maxTouchPoints && navigator.maxTouchPoints > 1;
+
+    const isSmallScreen = window.innerWidth <= 768;
+
+    return isMobileDevice || hasTouchPoints || isSmallScreen;
 };
 
 /**
@@ -1087,9 +1108,18 @@ const isMobile = () => {
  * @returns {boolean}
  */
 const isIOS = () => {
-    return [
-        'iPad Simulator', 'iPhone Simulator', 'iPod Simulator', 'iPad', 'iPhone', 'iPod'
-    ].includes(navigator.platform) || (navigator.userAgent.includes("Mac") && "ontouchend" in document);
+    const userAgent = navigator.userAgent;
+    const platform = navigator.platform;
+
+    const isIOSDevice = /iPhone|iPad|iPod/i.test(userAgent) ||
+        /iPhone|iPad|iPod/i.test(platform);
+
+    const isIpadPro = platform === 'MacIntel' && navigator.maxTouchPoints > 1;
+
+    const isSafari = /^((?!chrome|android).)*safari/i.test(userAgent.toLowerCase());
+    const isIOSInSafari = isSafari && /iPhone|iPad|iPod/i.test(userAgent);
+
+    return isIOSDevice || isIpadPro || isIOSInSafari;
 };
 
 

@@ -1071,3 +1071,8 @@ ul.info-card__list li::before {
 .modal--show-android .instructions--android {
     display: block;
 }
+
+.ios-modal .modal__title {
+    color: var(--color-text-primary) !important;
+    margin-bottom: 16px;
+}
