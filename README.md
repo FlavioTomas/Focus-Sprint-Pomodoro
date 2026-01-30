@@ -8,7 +8,6 @@
 Um aplicativo **Pomodoro** completo para estudos e produtividade, com **gerenciador de tarefas**, **multi-idioma**, **tema claro/escuro**, **notificações**, **indicador de ciclos** e **persistência via localStorage** — feito com **HTML, CSS e JavaScript puro**.
 
 - Repositório: <https://github.com/FlavioTomas/Flowtudy-Pomodoro>
-- (Opcional) GitHub Pages: <https://FlavioTomas.github.io/Flowtudy-Pomodoro/>
 
 ---
 
