@@ -79,9 +79,9 @@ const modalConfirmBtn = document.querySelector('.js-modal-confirm');
 const modalCancelBtn = document.querySelector('.js-modal-cancel');
 const iosModalOverlay = document.querySelector('.js-ios-modal-overlay');
 const closeIosModalBtn = document.querySelector('.js-ios-modal-close');
-const progressRing = document.querySelector('.js-progress-ring');
-const radius = parseFloat(progressRing.getAttribute('r'));
-const circumference = 2 * Math.PI * radius;
+let progressRing;
+let radius;       
+let circumference; 
 const rootElement = document.documentElement;
 let timerInterval = null;
 const cycleIndicator = document.querySelector('.js-cycle-indicator');
@@ -1104,6 +1104,10 @@ const isIOS = () => {
  * This function runs when the page has finished loading.
  */
 document.addEventListener('DOMContentLoaded', () => {
+    progressRing = document.querySelector('.js-progress-ring');
+    radius = parseFloat(progressRing.getAttribute('r'));
+    circumference = 2 * Math.PI * radius;
+
     // Initialize the progress ring SVG stroke
     progressRing.style.strokeDasharray = `${circumference} ${circumference}`;
 
