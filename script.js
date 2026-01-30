@@ -1075,51 +1075,29 @@ document.addEventListener('click', (e) => {
 
 
 /**
- * Checks if the user is on any mobile device.
+ * Checks if the user is on any mobile device using a robust method
+ * that also detects iPads/iPhones pretending to be Macs.
  * @returns {boolean}
  */
 const isMobile = () => {
-    const userAgent = navigator.userAgent;
+    // Standard check for most mobile devices
+    const isStandardMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-    const mobilePatterns = [
-        /Android/i,
-        /webOS/i,
-        /iPhone/i,
-        /iPad/i,
-        /iPod/i,
-        /BlackBerry/i,
-        /Windows Phone/i,
-        /Opera Mini/i,
-        /IEMobile/i,
-        /Mobile/i
-    ];
+    // Check for iPad/iPhone on iOS 13+ pretending to be a Mac
+    const isDisguisedIOS = (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
-    const isMobileDevice = mobilePatterns.some(pattern => pattern.test(userAgent));
-
-    const hasTouchPoints = navigator.maxTouchPoints && navigator.maxTouchPoints > 1;
-
-    const isSmallScreen = window.innerWidth <= 768;
-
-    return isMobileDevice || hasTouchPoints || isSmallScreen;
+    return isStandardMobile || isDisguisedIOS;
 };
 
+
 /**
- * Checks if the user is on an iOS device.
+ * Checks if the user is on an iOS device (iPhone, iPad, iPod).
+ * This check is more specific and reliable.
  * @returns {boolean}
  */
 const isIOS = () => {
-    const userAgent = navigator.userAgent;
-    const platform = navigator.platform;
-
-    const isIOSDevice = /iPhone|iPad|iPod/i.test(userAgent) ||
-        /iPhone|iPad|iPod/i.test(platform);
-
-    const isIpadPro = platform === 'MacIntel' && navigator.maxTouchPoints > 1;
-
-    const isSafari = /^((?!chrome|android).)*safari/i.test(userAgent.toLowerCase());
-    const isIOSInSafari = isSafari && /iPhone|iPad|iPod/i.test(userAgent);
-
-    return isIOSDevice || isIpadPro || isIOSInSafari;
+    // The user agent check is more reliable for distinguishing iOS from other mobiles
+    return /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 };
 
 
