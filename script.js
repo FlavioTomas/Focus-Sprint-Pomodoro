@@ -35,7 +35,16 @@
 // ==========================================================================
 // 1. VARIABLE DECLARATIONS
 // ==========================================================================
+// FUNÇÃO DE DEBUG TEMPORÁRIA
+const debugMobileDetection = () => {
+    const userAgent = navigator.userAgent;
+    const platform = navigator.platform;
+    const maxTouchPoints = navigator.maxTouchPoints || 0;
 
+    const message = `--- Mobile Debug Info ---\n\nUser Agent: ${userAgent}\n\nPlatform: ${platform}\n\nMax Touch Points: ${maxTouchPoints}`;
+
+    alert(message);
+};
 
 // Selects all necessary DOM elements for manipulation.
 const focusButton = document.querySelector('.js-focus-button');
@@ -1112,6 +1121,11 @@ const isIOS = () => {
  * This function runs when the page has finished loading.
  */
 document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', () => {
+        debugMobileDetection(); // <-- Adicione esta linha
+
+        // ... o resto do seu código de inicialização ...
+    });
     progressRing = document.querySelector('.js-progress-ring');
     radius = parseFloat(progressRing.getAttribute('r'));
     circumference = 2 * Math.PI * radius;
