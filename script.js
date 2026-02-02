@@ -570,6 +570,7 @@ const sendDesktopNotification = () => {
  * @param {boolean} shouldSave - Whether to save settings to localStorage.
  */
 const handleNotificationPermission = async (shouldSave = true) => {
+    const isCurrentlyPWA = await isPWA();
     // If it's a mobile device, show the instructions modal
     if (isMobile() && !isPWA()) {
         const modal = iosModalOverlay.querySelector('.modal');
@@ -582,6 +583,7 @@ const handleNotificationPermission = async (shouldSave = true) => {
         }
         iosModalOverlay.classList.add('modal-overlay--visible');
         popUpInput.checked = false; // Ensure the toggle remains off
+        if (shouldSave) saveSettings();
         return; // Stop the function here for mobile
     }
 
@@ -589,6 +591,7 @@ const handleNotificationPermission = async (shouldSave = true) => {
     if (!('Notification' in window)) {
         console.log("This browser does not support desktop notification");
         popUpInput.checked = false;
+        if (shouldSave) saveSettings();
         return;
     }
 
@@ -1108,12 +1111,13 @@ const isIOS = () => {
  * @returns {boolean}
  */
 const isPWA = () => {
-    // Check for the standard 'display-mode' media query
-    const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
-    // Fallback for older iOS devices
-    const isIOSStandalone = window.navigator.standalone === true;
-
-    return isStandalone || isIOSStandalone;
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+            const isIOSStandalone = window.navigator.standalone === true;
+            resolve(isStandalone || isIOSStandalone);
+        }, 200); 
+    });
 };
 
 
@@ -1180,18 +1184,4 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { threshold: 0.1 });
         infoCards.forEach(card => observer.observe(card));
     }
-
-
-     // CÓDIGO DE DIAGNÓSTICO
-    setTimeout(() => {
-        const debugInfo = document.getElementById('debug-info');
-        if (debugInfo) {
-            const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
-            const isIOSStandalone = window.navigator.standalone; // Ver o valor exato
-            debugInfo.innerHTML = `
-                display-mode: ${isStandalone} <br>
-                navigator.standalone: ${isIOSStandalone}
-            `;
-        }
-    }, 500); // Atraso de meio segundo para dar tempo ao navegador
 });
