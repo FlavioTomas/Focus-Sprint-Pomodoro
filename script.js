@@ -2,7 +2,7 @@
  * @file script.js
  * @description Main JavaScript file for the Flowtudy Pomodoro application.
  * @author Flávio Tomás Peña Villa
- * @version 1.2.6
+ * @version 1.2.7
  *
  * -------------------------------------------------------------------------- *
  *
@@ -568,44 +568,57 @@ const sendDesktopNotification = () => {
 
 
 /**
- * Asks for permission to send notifications, or shows
- * platform-specific instructions for mobile devices.
+ * Asks for permission to send notifications or shows platform-specific instructions
+ * for mobile browsers where the Notification API is not available.
+ * This version uses a direct check for the Notification API, making it robust
+ * and avoiding conflicts with Service Worker caching behavior.
  * @param {boolean} shouldSave - Whether to save settings to localStorage.
  */
-const handleNotificationPermission = async (shouldSave = true) => {
-    const isCurrentlyPWA = await isPWA();
-    // If it's a mobile device, show the instructions modal
-    if (isMobile() && !isPWA()) {
+const handleNotificationPermission = (shouldSave = true) => {
+
+    // A. First, check if the Notification API exists in the browser at all.
+    // In standard mobile browser tabs (like Safari or Chrome on iOS), it doesn't.
+    if (!('Notification' in window)) {
+
+        // If it doesn't exist, we know it's a mobile browser. Show the instructions modal.
         const modal = iosModalOverlay.querySelector('.modal');
-        // Clean up old classes and add the correct one for the current OS
+
+        // Clean up old classes to ensure only the correct instructions are displayed.
         modal.classList.remove('modal--show-ios', 'modal--show-android');
+
+        // Now, use the isIOS() helper to show the correct instructions for the user's OS.
         if (isIOS()) {
             modal.classList.add('modal--show-ios');
         } else {
             modal.classList.add('modal--show-android');
         }
-        iosModalOverlay.classList.add('modal-overlay--visible');
-        popUpInput.checked = false; // Ensure the toggle remains off
-        if (shouldSave) saveSettings();
-        return; // Stop the function here for mobile
-    }
 
-    // Original logic for Desktop browsers and PWAs
-    if (!('Notification' in window)) {
-        console.log("This browser does not support desktop notification");
+        // Make the modal overlay visible.
+        iosModalOverlay.classList.add('modal-overlay--visible');
+
+        // Ensure the toggle switch visually returns to the "off" state.
         popUpInput.checked = false;
+
         if (shouldSave) saveSettings();
+
+        // Stop the function here.
         return;
     }
 
+    // B. If the Notification API *does* exist, we are on a desktop browser or an installed PWA.
+    // In this context, we can proceed to request the actual permission.
     if (popUpInput.checked) {
-        const permission = await Notification.requestPermission();
-        if (permission !== 'granted') {
-            popUpInput.checked = false;
-        }
+        Notification.requestPermission().then(permission => {
+            // If the user denies permission, turn the switch back off.
+            if (permission !== 'granted') {
+                popUpInput.checked = false;
+            }
+            if (shouldSave) saveSettings();
+        });
+    } else {
+        // If the user is turning notifications off, just save the setting.
+        if (shouldSave) saveSettings();
     }
-
-    if (shouldSave) saveSettings();
 };
 
 
@@ -1081,21 +1094,6 @@ document.addEventListener('click', (e) => {
 
 
 
-/**
- * Checks if the user is on any mobile device using a robust method
- * that also detects iPads/iPhones pretending to be Macs.
- * @returns {boolean}
- */
-const isMobile = () => {
-    // Standard check for most mobile devices
-    const isStandardMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-
-    // Check for iPad/iPhone on iOS 13+ pretending to be a Mac
-    const isDisguisedIOS = (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-
-    return isStandardMobile || isDisguisedIOS;
-};
-
 
 /**
  * Checks if the user is on an iOS device (iPhone, iPad, iPod).
@@ -1109,34 +1107,12 @@ const isIOS = () => {
 
 
 
-/**
- * Checks if the app is running in standalone mode (as a PWA).
- * @returns {boolean}
- */
-const isPWA = () => {
-    return new Promise((resolve) => {
-        const hasPwaParam = new URLSearchParams(window.location.search).has('mode');
-        if (hasPwaParam) {
-            resolve(true);
-            return;
-        }
-
-        setTimeout(() => {
-            const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
-
-            const isIOSStandalone = window.navigator.standalone === true;
-
-            resolve(isStandalone || isIOSStandalone);
-        }, 500);
-    });
-};
-
-
-
 
 // ==========================================================================
 // 8. INITIALIZATION ON PAGE LOAD
 // ==========================================================================
+
+
 
 
 /**
