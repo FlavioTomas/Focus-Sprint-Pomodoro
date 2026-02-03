@@ -2,7 +2,7 @@
  * @file script.js
  * @description Main JavaScript file for the Flowtudy Pomodoro application.
  * @author Flávio Tomás Peña Villa
- * @version 1.2
+ * @version 1.2.3
  *
  * -------------------------------------------------------------------------- *
  *
@@ -468,7 +468,10 @@ const loadSettings = () => {
         breaksAutoStartInput.checked = savedSettings.autoStartBreaks;
         focusAutoStartInput.checked = savedSettings.autoStartFocus;
         soundNotificationInput.checked = savedSettings.sound;
-        if (Notification.permission !== 'granted') savedSettings.popup = false;
+        // Check if the Notification API exists AND if permission isn't granted.
+        if (!('Notification' in window) || Notification.permission !== 'granted') {
+            savedSettings.popup = false;
+        }
         popUpInput.checked = savedSettings.popup;
         changeTimerDuration('focus', false);
         changeTimerDuration('break', false);
@@ -1193,7 +1196,7 @@ document.addEventListener('DOMContentLoaded', () => {
         infoCards.forEach(card => observer.observe(card));
     }
 
-    console.log('Tentando registrar o Service Worker...'); 
+    console.log('Tentando registrar o Service Worker...');
     // Service Worker Registration
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
