@@ -64,8 +64,8 @@ self.addEventListener('activate', (event) => {
     return self.clients.claim();
 });
 
-// The 'fetch' event is fired for every network request the page makes.
-// We are using a "Cache First" strategy.
+// The 'fetch' event is fired for every network request.
+// We are using a "Network First" strategy for debugging.
 self.addEventListener('fetch', (event) => {
     // We only want to handle GET requests.
     if (event.request.method !== 'GET') {
@@ -73,10 +73,19 @@ self.addEventListener('fetch', (event) => {
     }
 
     event.respondWith(
-        caches.match(event.request).then((response) => {
-            // If the file is found in the cache, return it.
-            // Otherwise, make a network request to fetch it.
-            return response || fetch(event.request);
-        })
+        // Try the network first.
+        fetch(event.request)
+            .then((response) => {
+                // If the network request is successful, clone it and cache it.
+                const responseToCache = response.clone();
+                caches.open(CACHE_NAME).then((cache) => {
+                    cache.put(event.request, responseToCache);
+                });
+                return response;
+            })
+            .catch(() => {
+                // If the network fails, try to get it from the cache.
+                return caches.match(event.request);
+            })
     );
 });
