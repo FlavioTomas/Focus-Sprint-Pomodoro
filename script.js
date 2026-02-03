@@ -2,7 +2,7 @@
  * @file script.js
  * @description Main JavaScript file for the Flowtudy Pomodoro application.
  * @author Flávio Tomás Peña Villa
- * @version 1.2.4
+ * @version 1.2.6
  *
  * -------------------------------------------------------------------------- *
  *
