@@ -1,7 +1,10 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" translate="no">
 
 <head>
+    <!-- No translation tag so icons and texts wont break -->
+    <meta name="google" content="notranslate">
+
     <!-- SEO Meta Tags -->
     <meta charset="UTF-8">
     <title>Flowtudy | Temporizador Pomodoro Gratis y Gestor de Tareas</title>
@@ -27,7 +30,7 @@
 
     <!-- Favicon and Stylesheet -->
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 
 <body class="body">
@@ -53,14 +56,14 @@
                 <!-- Header controls for language, theme, and settings -->
                 <div class="header__controls">
                     <button class="button button-icon js-language-button" aria-label="Cambiar idioma">
-                        <span class="material-symbols-outlined">language</span>
+                        <span class="material-symbols-outlined" translate="no">language</span>
                     </button>
                     <div class="language-menu js-language-menu"></div>
                     <button class="button button-icon js-dark-mode-toggle" aria-label="Alternar modo oscuro">
-                        <span class="material-symbols-outlined">bedtime</span>
+                        <span class="material-symbols-outlined" translate="no">bedtime</span>
                     </button>
                     <button class="button button-icon js-settings-button" aria-label="Configuración">
-                        <span class="material-symbols-outlined">settings</span>
+                        <span class="material-symbols-outlined" translate="no">settings</span>
                     </button>
                 </div>
             </header>
@@ -89,11 +92,11 @@
                     </div>
                     <div class="timer__controls">
                         <button class="button button--secondary js-reset-button" aria-label="Reiniciar temporizador">
-                            <span class="material-symbols-outlined">history</span>
+                            <span class="material-symbols-outlined" translate="no">history</span>
                         </button>
                         <button class="button button--primary js-play-pause-button">INICIAR</button>
                         <button class="button button--secondary js-skip-button" aria-label="Saltar al siguiente ciclo">
-                            <span class="material-symbols-outlined">skip_next</span>
+                            <span class="material-symbols-outlined" translate="no">skip_next</span>
                         </button>
                     </div>
                 </section>
@@ -103,29 +106,29 @@
                         <h2 class="tasks__title" id="tasks-heading">Tareas</h2>
                         <button class="button button--tasks__options js-task-options-button"
                             aria-label="Más opciones de tarea">
-                            <span class="material-symbols-outlined">more_vert</span>
+                            <span class="material-symbols-outlined" translate="no">more_vert</span>
                         </button>
                         <section class="settings tasks-settings js-task-settings" hidden>
                             <div
                                 class="settings__options tasks-settings__options js-tasks-settings__options--delete-all-tasks-button">
-                                <span class="material-symbols-outlined">delete</span>
+                                <span class="material-symbols-outlined" translate="no">delete</span>
                                 <p>Eliminar Todas las Tareas</p>
                             </div>
                             <div
                                 class="settings__options tasks-settings__options js-tasks-settings__options--delete-completed-tasks-button">
-                                <span class="material-symbols-outlined">delete</span>
+                                <span class="material-symbols-outlined" translate="no">delete</span>
                                 <p>Eliminar Tareas Completadas</p>
                             </div>
                             <div
                                 class="settings__options tasks-settings__options js-tasks-settings__options--toggle-completed-tasks-button">
-                                <span class="material-symbols-outlined">disabled_visible</span>
+                                <span class="material-symbols-outlined" translate="no">disabled_visible</span>
                                 <p>Ocultar Tareas Completadas</p>
                             </div>
                         </section>
                     </div>
                     <div class="tasks__display">
                         <button class="button button--tasks__add js-add-task-button">
-                            <span class="material-symbols-outlined">add</span> Añadir Tarea
+                            <span class="material-symbols-outlined" translate="no">add</span> Añadir Tarea
                         </button>
                         <div class="tasks__display-create js-tasks__display-create" hidden>
                             <input class="js-tasks__display-create--input" type="text"
@@ -141,7 +144,7 @@
                 </section>
             </main>
             <a href="#info-section" class="scroll-down-indicator" aria-label="Desplázate hacia abajo para aprender más">
-                <span class="material-symbols-outlined">expand_more</span>
+                <span class="material-symbols-outlined" translate="no">expand_more</span>
             </a>
         </div>
         <!-- Settings Panel -->
@@ -201,7 +204,7 @@
         <section class="info-section" id="info-section">
             <h2 class="info-section__title">Qué es la Técnica Pomodoro y Cómo se Utiliza</h2>
             <div class="info-card">
-                <h3 class="info-card__title"><span class="material-symbols-outlined">help_outline</span> ¿Qué es la
+                <h3 class="info-card__title"><span class="material-symbols-outlined" translate="no">help_outline</span> ¿Qué es la
                     Técnica Pomodoro?</h3>
                 <p class="info-card__text">La Técnica Pomodoro es un método de gestión del tiempo desarrollado por
                     Francesco Cirillo a finales de los años 1980. Utiliza un temporizador para dividir el trabajo en
@@ -210,7 +213,7 @@
                     forma de tomate que Cirillo usaba como estudiante universitario.</p>
             </div>
             <div class="info-card">
-                <h3 class="info-card__title"><span class="material-symbols-outlined">stacks</span> Cómo Funciona</h3>
+                <h3 class="info-card__title"><span class="material-symbols-outlined" translate="no">stacks</span> Cómo Funciona</h3>
                 <ol class="info-card__list">
                     <li><span>Decide la tarea a realizar.</span></li>
                     <li><span>Configura el temporizador pomodoro (normalmente para 25 minutos).</span></li>
@@ -220,29 +223,29 @@
                 </ol>
             </div>
             <div class="info-card">
-                <h3 class="info-card__title"><span class="material-symbols-outlined">thumb_up</span> ¿Por qué Usarla?
+                <h3 class="info-card__title"><span class="material-symbols-outlined" translate="no">thumb_up</span> ¿Por qué Usarla?
                 </h3>
                 <ul class="info-card__list info-card__list--benefits">
-                    <li><span class="material-symbols-outlined">neurology</span>
+                    <li><span class="material-symbols-outlined" translate="no">neurology</span>
                         <div><strong>Mejora el Enfoque:</strong> Ayuda a resistir las autointerrupciones y reentrena tu
                             cerebro para mantenerse en la tarea.</div>
                     </li>
-                    <li><span class="material-symbols-outlined">self_improvement</span>
+                    <li><span class="material-symbols-outlined" translate="no">self_improvement</span>
                         <div><strong>Reduce el Agotamiento:</strong> Los descansos frecuentes son esenciales para la
                             agilidad mental y la motivación.</div>
                     </li>
-                    <li><span class="material-symbols-outlined">insights</span>
+                    <li><span class="material-symbols-outlined" translate="no">insights</span>
                         <div><strong>Aumenta la Conciencia:</strong> Obtendrás una comprensión más clara de cuánto
                             tiempo realmente toman las tareas.</div>
                     </li>
-                    <li><span class="material-symbols-outlined">psychology</span>
+                    <li><span class="material-symbols-outlined" translate="no">psychology</span>
                         <div><strong>Reduce la Ansiedad:</strong> Al enfocarte en '25 minutos de trabajo' en lugar de un
                             proyecto enorme, las tareas parecen menos abrumadoras.</div>
                     </li>
                 </ul>
             </div>
             <div class="info-card">
-                <h3 class="info-card__title"><span class="material-symbols-outlined">school</span> Consejos
+                <h3 class="info-card__title"><span class="material-symbols-outlined" translate="no">school</span> Consejos
                     Profesionales para el Éxito</h3>
                 <ul class="info-card__list">
                     <li><strong>Protege Tu Pomodoro:</strong> Si te interrumpen durante una sesión de enfoque, pausa el
@@ -274,7 +277,7 @@
     <div class="modal-overlay js-ios-modal-overlay">
         <div class="modal ios-modal">
             <button class="button button-icon ios-modal__close js-ios-modal-close" aria-label="Cerrar instrucciones">
-                <span class="material-symbols-outlined">close</span>
+                <span class="material-symbols-outlined" translate="no">close</span>
             </button>
             <h3 class="modal__title">Activar Notificaciones en el Móvil</h3>
             <p class="modal__text">Para que las notificaciones funcionen de forma fiable, añade Flowtudy a tu Pantalla

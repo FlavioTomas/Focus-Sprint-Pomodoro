@@ -819,10 +819,10 @@ const renderTask = (task) => {
         <p class="task-item__text">${sanitizedText}</p>
         <div class="task-item__edit-container">
             <input type="text" class="task-item__edit-input" value="${sanitizedText}">
-            <button class="task-item__edit-button" data-action="save-edit" aria-label="Save"><span class="material-symbols-outlined">check</span></button>
-            <button class="task-item__edit-button" data-action="cancel-edit" aria-label="Cancel"><span class="material-symbols-outlined">close</span></button>
+            <button class="task-item__edit-button" data-action="save-edit" aria-label="Save"><span class="material-symbols-outlined" translate="no">check</span></button>
+            <button class="task-item__edit-button" data-action="cancel-edit" aria-label="Cancel"><span class="material-symbols-outlined" translate="no">close</span></button>
         </div>
-        <button class="button button-icon task-item__options" aria-label="Task options"><span class="material-symbols-outlined">more_vert</span></button>
+        <button class="button button-icon task-item__options" aria-label="Task options"><span class="material-symbols-outlined" translate="no">more_vert</span></button>
     `;
     tasksContainer.insertBefore(taskItem, addTaskButton);
 };
@@ -968,7 +968,7 @@ const toggleMenu = (taskItem) => {
         const texts = uiStrings[currentLanguage];
         menu = document.createElement('div');
         menu.className = 'task-item__menu';
-        menu.innerHTML = `<div class="task-item__menu-option" data-action="edit"><span class="material-symbols-outlined">edit</span> ${texts.edit}</div><div class="task-item__menu-option" data-action="delete"><span class="material-symbols-outlined">delete</span> ${texts.delete}</div>`;
+        menu.innerHTML = `<div class="task-item__menu-option" data-action="edit"><span class="material-symbols-outlined" translate="no">edit</span> ${texts.edit}</div><div class="task-item__menu-option" data-action="delete"><span class="material-symbols-outlined" translate="no">delete</span> ${texts.delete}</div>`;
         taskItem.appendChild(menu);
     }
     if (!wasActive) {
@@ -1052,7 +1052,7 @@ const updateLanguageMenu = () => {
         <a href="${lang.path}" class="language-option ${lang.active ? 'active' : ''}">
             <span class="language-flag">${lang.flag}</span> 
             ${lang.name} 
-            <span class="material-symbols-outlined language-check">check</span>
+            <span class="material-symbols-outlined language-check" translate="no">check</span>
         </a>
     `).join('');
 };
